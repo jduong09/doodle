@@ -1,0 +1,59 @@
+html {
+  font-family: sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  display: block;
+}
+
+td, th {
+  border: 1px solid rgb(190,190,190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235,235,235);
+}
+
+td {
+  text-align: center;
+  height: 36px;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250,250,250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);
+}
+
+caption {
+  padding: 10px;
+}
+
+.cell-time-slot {
+  padding: 0;
+}
+
+.cell-time-slot > div {
+  width: 100%;
+  height: 50%;
+}
+
+.cell-time-slot > div:first-child {
+  border-bottom: 1px dashed grey;
+  height: 17px;
+}
+
+.cell-time-slot > div:last-child {
+  height: 18px;
+}
+
+.highlight {
+  position: relative;
+}
