@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import '../../css/table.css';
 import { TimeSlot } from './timeslot';
 
