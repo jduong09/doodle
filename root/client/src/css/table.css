@@ -12,7 +12,14 @@ table {
 
 td, th {
   border: 1px solid rgb(190,190,190);
-  padding: 10px 20px;
+}
+
+th {
+  padding: 1rem;
+}
+
+td {
+  padding: 0 1rem;
 }
 
 th {
@@ -21,7 +28,6 @@ th {
 
 td {
   text-align: center;
-  height: 36px;
 }
 
 tr:nth-child(even) td {
@@ -37,23 +43,57 @@ caption {
 }
 
 .cell-time-slot {
+  position: relative;
   padding: 0;
 }
 
 .cell-time-slot > div {
-  width: 100%;
-  height: 50%;
+  padding: 1rem;
 }
 
 .cell-time-slot > div:first-child {
   border-bottom: 1px dashed grey;
-  height: 17px;
 }
 
-.cell-time-slot > div:last-child {
-  height: 18px;
+.cell-half-hour > span {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 8px;
+  background-color: salmon;
 }
 
-.highlight {
-  position: relative;
+.h-25 {
+  height: 25%;
+}
+
+.h-50 {
+  height: 50%;
+}
+
+.h-75 {
+  height: 75%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.p-0 {
+  top: 0;
+}
+
+.p-15 {
+  top: 25%;
+}
+
+.p-30 {
+  top: 50%;
+}
+
+.p-45 {
+  top: 45%;
 }
