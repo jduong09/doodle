@@ -24,6 +24,7 @@ export const PollForm = ({ handleSubmit }) => {
   /* 
     Insert Calendar with clickable starting times.
   */
+  console.log(pollAvailabilities);
   return (
     <form method='POST' action='/polls' onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
       <label htmlFor='inputName'>Name:

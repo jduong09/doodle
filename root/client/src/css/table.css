@@ -51,7 +51,7 @@ caption {
   padding: 1rem;
 }
 
-.cell-time-slot > div:first-child {
+.cell-time-slot > div:nth-child(2) {
   border-bottom: 1px dashed grey;
 }
 

@@ -23,7 +23,9 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
             <td>12 A.M.</td>
             <td className="cell-time-slot">
               <TimeSlot date='09-09-1996' startTime='12:00' duration={duration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
+              <TimeSlot date='09-09-1996' startTime='12:15' duration={duration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
               <TimeSlot date='09-09-1996' startTime='12:30' duration={duration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
+              <TimeSlot date='09-09-1996' startTime='12:45' duration={duration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
             </td>
             <td className="cell-time-slot">
               <TimeSlot date='09-10-1996' startTime='12:00' duration={duration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
