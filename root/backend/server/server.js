@@ -25,26 +25,8 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
 
 app.post('/polls', async (req, res) => {
-  console.log(req.body);
   const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities } = req.body;
-  /* req.body 
-  {
-    pollName: 'Valorant Review',
-[0]   pollDescription: 'Meeting between me and friends',
-[0]   pollLocation: 'Bludbuds.',
-[0]   pollDuration: '30'
-  }
-  */
- /*
-  name: { type: String, required: true},
-  author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  description: { type: String, required: false },
-  createdAt: { type: Date },
-  // { 'Day': 'Time start?' }
-  availabilities: { type: Object, required: true },
-  location: { type: String },
-  duration: { type: Number }
- */
+
   try {
     const pollData = {
       name: pollName,
@@ -55,8 +37,24 @@ app.post('/polls', async (req, res) => {
     }
 
     const poll = new Poll(pollData);
-    const result = await poll.save();
-    console.log(result);
+    await poll.save();
+  } catch(err) {
+    console.log(err);
+  }
+});
+
+app.get('/polls/all', async (req, res, next) => {
+  try {
+    const polls = await Poll.find({}).then(data => {
+      return data.map(poll => {
+        return {
+          title: poll.name,
+          location: poll.location
+        }
+      });
+    });
+    res.json({ response: polls });
+    res.end();
   } catch(err) {
     console.log(err);
   }
