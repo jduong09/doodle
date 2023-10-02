@@ -8,22 +8,6 @@ export const PollForm = ({ handleSubmit }) => {
   const [pollDuration, setPollDuration] = useState('15');
   const [pollAvailabilities, setPollAvailabilities] = useState({});
 
-  /*
-  {
-    name: { type: String, required: true},
-    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    description: { type: String, required: false },
-    location: { type: String },
-    duration: { type: Number }
-    createdAt: { type: Date },
-    // { 'Day': 'Time start?' }
-    availabilities: { type: Object, required: true },
-  }
-  */
-
-  /* 
-    Insert Calendar with clickable starting times.
-  */
   return (
     <form method='POST' action='/polls' onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
       <label htmlFor='inputName'>Name:

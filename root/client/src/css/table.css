@@ -8,6 +8,8 @@ table {
   letter-spacing: 1px;
   font-size: 0.8rem;
   display: block;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 td, th {
@@ -48,11 +50,12 @@ caption {
 }
 
 .cell-time-slot > div {
-  padding: 1rem;
+  padding: .75rem;
+  border-bottom: 1px dashed grey;
 }
 
-.cell-time-slot > div:first-child {
-  border-bottom: 1px dashed grey;
+.cell-time-slot > div:last-child {
+  border-bottom: 0;
 }
 
 .cell-half-hour > span {
@@ -64,6 +67,7 @@ caption {
   justify-content: space-between;
   font-size: 8px;
   background-color: salmon;
+  z-index: 10;
 }
 
 .h-25 {
@@ -95,5 +99,5 @@ caption {
 }
 
 .p-45 {
-  top: 45%;
+  top: 75%;
 }
