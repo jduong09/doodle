@@ -1,15 +1,15 @@
 import { React, useState } from 'react';
 import { Table } from '../table/table';
 
-export const PollForm = ({ handleSubmit }) => {
-  const [pollName, setPollName] = useState('');
-  const [pollDescription, setPollDescription] = useState('');
-  const [pollLocation, setPollLocation] = useState('');
-  const [pollDuration, setPollDuration] = useState('15');
-  const [pollAvailabilities, setPollAvailabilities] = useState({});
+export const PollForm = ({ handleSubmit, editData }) => {
+  const [pollName, setPollName] = useState(editData.name || '');
+  const [pollDescription, setPollDescription] = useState(editData.description || '');
+  const [pollLocation, setPollLocation] = useState(editData.location || '');
+  const [pollDuration, setPollDuration] = useState(editData.duration || '15');
+  const [pollAvailabilities, setPollAvailabilities] = useState(editData.availabilities || {});
 
   return (
-    <form method='POST' action='/polls' onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
+    <form method={editData ? 'PATCH' : 'POST'} action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
       <label htmlFor='inputName'>Name:
         <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
       </label>
