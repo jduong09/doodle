@@ -10,9 +10,7 @@ export const Dashboard = () => {
   }
 
   useEffect(() => {
-    const getPolls = async () => {
-      return await fetch('/polls/all').then(data => data.json()).then(result => result.response);
-    }
+    const getPolls = async () => await fetch('/polls/all').then(data => data.json()).then(result => result.response);
 
     try {
       const polls = getPolls();
