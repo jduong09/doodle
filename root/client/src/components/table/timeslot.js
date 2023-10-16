@@ -1,4 +1,4 @@
-import { React, useState} from 'react';
+import { React, useState } from 'react';
 import { classTopPosition, classHeight } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
@@ -13,7 +13,6 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
 
     if (!newPollAvail[date]) {
       newPollAvail[date] = [startTime];
-      //newPollAvail[date] = [timeframe];
       setSelected(true);
       setPollAvailabilities(newPollAvail);
     } else if (!newPollAvail[date].includes(startTime)) {

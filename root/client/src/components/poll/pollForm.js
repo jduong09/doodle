@@ -2,11 +2,14 @@ import { React, useState } from 'react';
 import { Table } from '../table/table';
 
 export const PollForm = ({ handleSubmit, editData }) => {
-  const [pollName, setPollName] = useState(editData.name || '');
-  const [pollDescription, setPollDescription] = useState(editData.description || '');
-  const [pollLocation, setPollLocation] = useState(editData.location || '');
-  const [pollDuration, setPollDuration] = useState(editData.duration || '15');
-  const [pollAvailabilities, setPollAvailabilities] = useState(editData.availabilities || {});
+  const [pollName, setPollName] = useState(editData ? editData.name : '');
+  const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
+  const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
+  const [pollDuration, setPollDuration] = useState(editData ? editData.duration : '15');
+  const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
+  console.log(pollAvailabilities);
+
+  // keep state of start times.
 
   return (
     <form method={editData ? 'PATCH' : 'POST'} action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
@@ -33,5 +36,5 @@ export const PollForm = ({ handleSubmit, editData }) => {
       </label>
       <button type='submit'>Create Poll</button>
     </form>
-  )
-}
+  );
+};

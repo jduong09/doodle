@@ -41,7 +41,6 @@ router.route('/')
   });
 
 router.get('/:pollId/pollInfo', async (req, res) => {
-  
   const pollData = await Poll.findById(req.params.pollId)
     .then(data => {
       return {
