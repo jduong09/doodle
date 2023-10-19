@@ -44,5 +44,5 @@ export const TimeSlot = ({ date, hour, startTime, duration, setPollAvailabilitie
     <div className='cell-half-hour' data-time={startTime} onClick={(e) => handleClick(e)}>
       {selected && <TimeBlock handleDelete={handleDelete} startTime={startTime} duration={duration} classTopPosition={classTopPosition(startTime.split(':')[1])} classHeight={classHeight(duration)} />}
     </div>
-  )
+  );
 }

@@ -7,11 +7,24 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
   const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) / 60 : '15');
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
-  // weekly, monthly dates.
-  console.log(pollDuration);
 
+  const resetFormData = () => {
+    setPollName('');
+    setPollDescription('');
+    setPollLocation('');
+    setPollDuration('15');
+    setPollAvailabilities({})
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    
+    handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities });
+    resetFormData();
+  }
+  
   return (
-    <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
+    <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
       <label htmlFor='inputName'>Name:
         <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
       </label>
@@ -33,7 +46,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
       <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
       </label>
-      <button type='submit'>Create Poll</button>
+      <button type='submit'>{editData ? 'Update' : 'Create'}</button>
     </form>
   );
 };

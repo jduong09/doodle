@@ -5,7 +5,6 @@ export const calculateTimeFrame = (startTime, duration) => {
   let newMinutes = minutes + parseInt(duration);
   let adjustedHour = splitTime[0] > 12 ? `${parseInt(splitTime[0]) - 12}` : splitTime[0];
 
-  // is the addition of the time plus duration isn't greater than 60, then hour doesn't need to change.
   if (newMinutes < 60) {
     if (splitTime[0] === '0') {
       return `${12}:${splitTime[1]} - ${adjustedHour}:${newMinutes}`;

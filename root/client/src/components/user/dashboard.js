@@ -10,12 +10,12 @@ export const Dashboard = () => {
   const handleSubmit = async (e, formData) => {
     e.preventDefault();
 
-    console.log(formData);
     if (formMethod === 'POST') {
       await fetch('/polls', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
     } else {
       await fetch(`/polls/${editData.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
     }
+    setShowPollForm(false);
   }
 
   const handleEdit = async (poll_uuid, e) => {
@@ -39,7 +39,7 @@ export const Dashboard = () => {
     } catch(error) {
       console.log(error);
     }
-  }, []);
+  }, [showPollForm]);
 
   const arrPolls = polls.map((poll, idx) => {
     return (
