@@ -40,23 +40,26 @@ router.route('/')
       console.log(err);
     }
   })
-  .patch(async (req, res) => {
-    console.log('hit patch route');
-    try {
-      const pollData = {
-        name: pollName,
-        description: pollDescription,
-        location: pollLocation,
-        duration: parseInt(pollDuration) * 60,
-        availabilities: pollAvailabilities
-      }
-  
-      await Poll.findOneAndUpdate({ _id: req.params.pollId }, pollData);
-      res.end();
-    } catch(err) {
-      console.log(err);
+
+router.patch('/:pollId', async (req, res) => {
+  const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities } = req.body;
+
+  try {
+    const pollData = {
+      name: pollName,
+      description: pollDescription,
+      location: pollLocation,
+      duration: parseInt(pollDuration) * 60,
+      availabilities: pollAvailabilities
     }
-  });
+
+    await Poll.findOneAndUpdate({ _id: req.params.pollId }, pollData);
+    res.end();
+  } catch(err) {
+    console.log(err);
+  }
+});
+
 router.get('/:pollId/pollInfo', async (req, res) => {
   const pollData = await Poll.findById(req.params.pollId)
     .then(data => {

@@ -21,8 +21,6 @@ export const TimeSlot = ({ date, hour, startTime, duration, setPollAvailabilitie
       setSelected(true);
       setPollAvailabilities(newPollAvail);
     }
-
-    console.log('Poll Times:', newPollAvail);
   }
 
   // Needs to remove its time block from array of timeblocks.
@@ -35,7 +33,7 @@ export const TimeSlot = ({ date, hour, startTime, duration, setPollAvailabilitie
     };
 
     const array = newPollAvail[date].filter((time) => time !== startTime);
-
+    
     newPollAvail[date] = array;
 
     setSelected(false);

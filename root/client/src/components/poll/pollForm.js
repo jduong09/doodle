@@ -5,12 +5,13 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollName, setPollName] = useState(editData ? editData.name : '');
   const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
-  const [pollDuration, setPollDuration] = useState(editData ? editData.duration : '15');
+  const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) / 60 : '15');
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
   // weekly, monthly dates.
+  console.log(pollDuration);
 
   return (
-    <form method={editData ? 'PATCH' : 'POST'} action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
+    <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
       <label htmlFor='inputName'>Name:
         <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
       </label>

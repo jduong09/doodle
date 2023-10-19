@@ -14,14 +14,12 @@ export const TableRow = ({ hour, duration, setPollAvailabilities, pollAvailabili
         });
       }
     }
-    /*if (pollAvailabilities && pollAvailabilities[date]) {
-    }*/
     return (
       <td className='cell-time-slot' key={idx}>
         <TimeSlot
           date={date}
           hour={hour}
-          startTime={`${hour < 12  ? `${hour === 0 ? 12 : hour}:00` : `${hour - 12 === 0 ? 12 : hour - 12}:00`}`}
+          startTime={`${hour}:00`}
           duration={duration}
           setPollAvailabilities={setPollAvailabilities}
           pollAvailabilities={pollAvailabilities}
@@ -30,7 +28,7 @@ export const TableRow = ({ hour, duration, setPollAvailabilities, pollAvailabili
         <TimeSlot
           date={date}
           hour={hour}
-          startTime={`${hour < 12  ? `${hour === 0 ? 12 : hour}:15` : `${hour - 12 === 0 ? 12 : hour - 12}:15`}`}
+          startTime={`${hour}:00`}
           duration={duration}
           setPollAvailabilities={setPollAvailabilities}
           pollAvailabilities={pollAvailabilities}
@@ -39,7 +37,7 @@ export const TableRow = ({ hour, duration, setPollAvailabilities, pollAvailabili
         <TimeSlot
           date={date}
           hour={hour}
-          startTime={`${hour < 12  ? `${hour === 0 ? 12 : hour}:30` : `${hour - 12 === 0 ? 12 : hour - 12}:30`}`}
+          startTime={`${hour}:00`}
           duration={duration}
           setPollAvailabilities={setPollAvailabilities}
           pollAvailabilities={pollAvailabilities}
@@ -48,7 +46,7 @@ export const TableRow = ({ hour, duration, setPollAvailabilities, pollAvailabili
         <TimeSlot
           date={date}
           hour={hour}
-          startTime={`${hour < 12  ? `${hour === 0 ? 12 : hour}:45` : `${hour - 12 === 0 ? 12 : hour - 12}:45`}`}
+          startTime={`${hour}:00`}
           duration={duration}
           setPollAvailabilities={setPollAvailabilities}
           pollAvailabilities={pollAvailabilities}
