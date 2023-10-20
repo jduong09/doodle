@@ -16,6 +16,7 @@ export const Dashboard = () => {
       await fetch(`/polls/${editData.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
     }
     setShowPollForm(false);
+    setEditData(null);
   }
 
   const handleEdit = async (poll_uuid, e) => {
@@ -28,6 +29,7 @@ export const Dashboard = () => {
   const handlePollOpen = () => {
     setShowPollForm(!showPollForm);
     setFormMethod('POST');
+    setEditData(null);
   }
 
   useEffect(() => {

@@ -10,12 +10,10 @@ export const TimeSlot = ({ date, hour, startTime, duration, setPollAvailabilitie
       ...pollAvailabilities,
     };
 
-    // If date & start time has not been added to poll availabilities, add it
     if (!newPollAvail[date]) {
       newPollAvail[date] = [`${hour}:${startTime.split(':')[1]}`];
       setSelected(true);
       setPollAvailabilities(newPollAvail);
-    // If date of poll availabilites doesn't have start time, add this specific start time to the date key in the object.
     } else if (!newPollAvail[date].includes(`${hour}:${startTime.split(':')[1]}`)) {
       newPollAvail[date] = [...newPollAvail[date], `${hour}:${startTime.split(':')[1]}`];
       setSelected(true);
@@ -23,8 +21,6 @@ export const TimeSlot = ({ date, hour, startTime, duration, setPollAvailabilitie
     }
   }
 
-  // Needs to remove its time block from array of timeblocks.
-  // Needs to delete itself as an element.
   const handleDelete = (e) => {
     e.preventDefault();
 
@@ -33,9 +29,12 @@ export const TimeSlot = ({ date, hour, startTime, duration, setPollAvailabilitie
     };
 
     const array = newPollAvail[date].filter((time) => time !== startTime);
+    if (!array.length) {
+      delete newPollAvail[date];
+    } else {
+      newPollAvail[date] = array;
+    }
     
-    newPollAvail[date] = array;
-
     setSelected(false);
     setPollAvailabilities(newPollAvail);
   }
