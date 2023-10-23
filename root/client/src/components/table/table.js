@@ -107,23 +107,44 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
     setWeek(newStateWeek);
   }, []);
 
-  const handlePrevWeek = () => {
+  // 7 * 24 * 60 * 60 * 1000
+
+  const handlePrevWeek = (e) => {
+    e.preventDefault();
     // Take each day of this.state.week. Move that back 7 days.
     const newStateWeek = {
-      'Sunday': new Date().setDate(new Date(week['Sunday']).getDate() - 7),
-      'Monday': new Date().setDate(new Date(week['Monday']).getDate() - 7),
-      'Tuesday': new Date().setDate(new Date(week['Tuesday']).getDate() - 7),
-      'Wednesday': new Date().setDate(new Date(week['Wednesday']).getDate() - 7),
-      'Thursday': new Date().setDate(new Date(week['Thursday']).getDate() - 7),
-      'Friday': new Date().setDate(new Date(week['Friday']).getDate() - 7),
-      'Saturday': new Date().setDate(new Date(week['Saturday']).getDate() - 7),
+      'Sunday': week['Sunday'] - (7 * 24 * 60 * 60 * 1000),
+      'Monday': week['Monday'] - (7 * 24 * 60 * 60 * 1000),
+      'Tuesday': week['Tuesday'] - (7 * 24 * 60 * 60 * 1000),
+      'Wednesday': week['Wednesday'] - (7 * 24 * 60 * 60 * 1000),
+      'Thursday': week['Thursday'] - (7 * 24 * 60 * 60 * 1000),
+      'Friday': week['Friday'] - (7 * 24 * 60 * 60 * 1000),
+      'Saturday': week['Saturday'] - (7 * 24 * 60 * 60 * 1000),
     }
+
+    console.log('Previous Week Sunday: ', new Date(newStateWeek['Sunday']));
+    console.log('Previous Week Saturday: ',new Date(newStateWeek['Saturday']));
 
     setWeek(newStateWeek);
   }
 
-  const handleNextWeek = () => {
+  const handleNextWeek = (e) => {
+    e.preventDefault();
 
+    const newStateWeek = {
+      'Sunday': week['Sunday'] + (7 * 24 * 60 * 60 * 1000),
+      'Monday': week['Monday'] + (7 * 24 * 60 * 60 * 1000),
+      'Tuesday': week['Tuesday'] + (7 * 24 * 60 * 60 * 1000),
+      'Wednesday': week['Wednesday'] + (7 * 24 * 60 * 60 * 1000),
+      'Thursday': week['Thursday'] + (7 * 24 * 60 * 60 * 1000),
+      'Friday': week['Friday'] + (7 * 24 * 60 * 60 * 1000),
+      'Saturday': week['Saturday'] + (7 * 24 * 60 * 60 * 1000),
+    }
+
+    console.log('Next Week Sunday: ', new Date(newStateWeek['Sunday']));
+    console.log('Next Week Saturday: ',new Date(newStateWeek['Saturday']));
+
+    setWeek(newStateWeek);
   }
 
   const tbody = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23].map((hour, idx) => {
@@ -158,6 +179,7 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
             </button>
           </li>
         </ul>
+        <div id="week-current">{`${new Date(week['Sunday']).toDateString()} - ${new Date(week['Saturday']).toDateString()}`}</div>
       </div>
       <table>
         <thead>
