@@ -3,6 +3,7 @@ import { classTopPosition, classHeight } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
 export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities }) => {
+  console.log(date);
   const [selected, setSelected] = useState(false);
 
   const handleClick = (e) => {
