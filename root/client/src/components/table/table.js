@@ -2,14 +2,12 @@ import { React, useState, useEffect } from 'react';
 import '../../css/table.css';
 import { TableRow } from './tableRow';
 
-// const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) => {
   const [today] = useState(new Date());
   const [week, setWeek] = useState({});
 
   useEffect(() => {
-    const utcDayOfWeek = today.getUTCDate();
+    const utcDayOfWeek = today.getUTCDay();
     let newStateWeek;
     switch(utcDayOfWeek) {
       case 0:
@@ -121,10 +119,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
       'Friday': week['Friday'] - (7 * 24 * 60 * 60 * 1000),
       'Saturday': week['Saturday'] - (7 * 24 * 60 * 60 * 1000),
     }
-
-    console.log('Previous Week Sunday: ', new Date(newStateWeek['Sunday']));
-    console.log('Previous Week Saturday: ',new Date(newStateWeek['Saturday']));
-
     setWeek(newStateWeek);
   }
 
@@ -140,10 +134,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
       'Friday': week['Friday'] + (7 * 24 * 60 * 60 * 1000),
       'Saturday': week['Saturday'] + (7 * 24 * 60 * 60 * 1000),
     }
-
-    console.log('Next Week Sunday: ', new Date(newStateWeek['Sunday']));
-    console.log('Next Week Saturday: ',new Date(newStateWeek['Saturday']));
-
     setWeek(newStateWeek);
   }
 
@@ -157,8 +147,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
   });
 
   const tHeadRow = Object.keys(week).map((weekDay, idx) => {
-    // October
-    // ${MONTHS[week[weekDay].getUTCMonth()]}
     return (
       <th key={idx}>{`${weekDay} ${new Date (week[weekDay]).getUTCDate()}`}</th>
     );

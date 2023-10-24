@@ -7,18 +7,21 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
 
   const handleClick = (e) => {
     e.preventDefault();
+    
+    const timestamp = new Date(`${date}T${startTime}`);
+    const dbTime = Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
+   
     const newPollAvail = {
       ...pollAvailabilities,
     };
 
     if (!newPollAvail[date]) {
-      newPollAvail[date] = [startTime];
-      //newPollAvail[date] = [timeframe];
+      newPollAvail[date] = [dbTime];
       setSelected(true);
       setPollAvailabilities(newPollAvail);
-    } else if (!newPollAvail[date].includes(startTime)) {
+    } else if (!newPollAvail[date].includes(dbTime)) {
 
-      newPollAvail[date] = [...newPollAvail[date], startTime];
+      newPollAvail[date] = [...newPollAvail[date], dbTime];
       setSelected(true);
       setPollAvailabilities(newPollAvail);
     }
@@ -33,7 +36,10 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
       ...pollAvailabilities,
     };
 
-    const array = newPollAvail[date].filter((time) => time !== startTime);
+    const timestamp = new Date(`${date}T${startTime}`);
+    const dbTime = Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
+
+    const array = newPollAvail[date].filter((time) => time !== dbTime);
 
     newPollAvail[date] = array;
 
