@@ -47,9 +47,20 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
     setPollAvailabilities(newPollAvail);
   }
 
+  const currentTimestamp = new Date();
+  const timeSlotTimeStamp = new Date(`${date}T${startTime}`);
+
   return (
-    <div className='cell-half-hour' data-time={startTime} onClick={(e) => handleClick(e)}>
-      {selected && <TimeBlock handleDelete={handleDelete} startTime={startTime} duration={duration} classTopPosition={classTopPosition(startTime.split(':')[1])} classHeight={classHeight(duration)} />}
+    <div className={`cell-half-hour ${timeSlotTimeStamp < currentTimestamp ? 'disabled' : ''}`} data-time={startTime} onClick={(e) => handleClick(e)}>
+      {selected &&
+        <TimeBlock 
+          handleDelete={handleDelete}
+          startTime={startTime}
+          duration={duration}
+          classTopPosition={classTopPosition(startTime.split(':')[1])}
+          classHeight={classHeight(duration)}
+        />
+      }
     </div>
   )
 }
