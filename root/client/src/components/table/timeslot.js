@@ -1,5 +1,5 @@
 import { React, useState} from 'react';
-import { classTopPosition, classHeight } from '../../util/tablehelpers';
+import { classTopPosition, classHeight, getDbTime } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
 export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities }) => {
@@ -8,8 +8,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
   const handleClick = (e) => {
     e.preventDefault();
     
-    const timestamp = new Date(`${date}T${startTime}`);
-    const dbTime = Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
+    const dbTime = getDbTime(date, startTime);
    
     const newPollAvail = {
       ...pollAvailabilities,
@@ -36,8 +35,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
       ...pollAvailabilities,
     };
 
-    const timestamp = new Date(`${date}T${startTime}`);
-    const dbTime = Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
+    const dbTime = getDbTime(date, startTime);
 
     const array = newPollAvail[date].filter((time) => time !== dbTime);
 

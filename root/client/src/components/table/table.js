@@ -105,39 +105,31 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
     setWeek(newStateWeek);
   }, []);
 
-  // 7 * 24 * 60 * 60 * 1000
-
   const handlePrevWeek = (e) => {
     e.preventDefault();
     // Take each day of this.state.week. Move that back 7 days.
-    const newStateWeek = {
-      'Sunday': week['Sunday'] - (7 * 24 * 60 * 60 * 1000),
-      'Monday': week['Monday'] - (7 * 24 * 60 * 60 * 1000),
-      'Tuesday': week['Tuesday'] - (7 * 24 * 60 * 60 * 1000),
-      'Wednesday': week['Wednesday'] - (7 * 24 * 60 * 60 * 1000),
-      'Thursday': week['Thursday'] - (7 * 24 * 60 * 60 * 1000),
-      'Friday': week['Friday'] - (7 * 24 * 60 * 60 * 1000),
-      'Saturday': week['Saturday'] - (7 * 24 * 60 * 60 * 1000),
+    const newStateWeek = {};
+
+    for (const day in week) {
+      newStateWeek[day] = week[day] - (7 * 24 * 60 * 60 * 1000)
     }
+    
     setWeek(newStateWeek);
   }
 
   const handleNextWeek = (e) => {
     e.preventDefault();
 
-    const newStateWeek = {
-      'Sunday': week['Sunday'] + (7 * 24 * 60 * 60 * 1000),
-      'Monday': week['Monday'] + (7 * 24 * 60 * 60 * 1000),
-      'Tuesday': week['Tuesday'] + (7 * 24 * 60 * 60 * 1000),
-      'Wednesday': week['Wednesday'] + (7 * 24 * 60 * 60 * 1000),
-      'Thursday': week['Thursday'] + (7 * 24 * 60 * 60 * 1000),
-      'Friday': week['Friday'] + (7 * 24 * 60 * 60 * 1000),
-      'Saturday': week['Saturday'] + (7 * 24 * 60 * 60 * 1000),
+    const newStateWeek = {};
+
+    for (const day in week) {
+      newStateWeek[day] = week[day] + (7 * 24 * 60 * 60 * 1000)
     }
+
     setWeek(newStateWeek);
   }
 
-  const tbody = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23].map((hour, idx) => {
+  const tbody = [...Array(24).keys()].map((hour, idx) => {
     return (
       <tr key={idx}>
         <td>{hour < 12  ? `${hour === 0 ? 12 : hour} A.M.` : `${hour - 12 === 0 ? 12 : hour - 12} P.M.`}</td>
