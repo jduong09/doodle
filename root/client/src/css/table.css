@@ -49,6 +49,11 @@ caption {
   padding: 0;
 }
 
+.cell-half-hour.disabled {
+  background-color: rgb(165, 165, 165) !important;
+  pointer-events: none;
+}
+
 .cell-time-slot > div {
   padding: .75rem;
   border-bottom: 1px dashed grey;
