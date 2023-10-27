@@ -55,7 +55,6 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
     <div className={`cell-half-hour ${timeSlotTimeStamp < currentTimestamp ? 'disabled' : ''}`} data-time={startTime} onClick={(e) => handleClick(e)}>
       {selected && 
         <TimeBlock 
-          date={date}
           handleDelete={handleDelete}
           startTime={startTime}
           duration={duration}
