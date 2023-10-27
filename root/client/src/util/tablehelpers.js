@@ -46,3 +46,8 @@ export const classHeight = (duration) => {
     return 'h-100';
   }
 }
+
+export const getDbTime = (date, startTime) => {
+  const timestamp = new Date(`${date}T${startTime}`);
+  return Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
+}

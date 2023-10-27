@@ -21,7 +21,9 @@ export const Dashboard = () => {
 
   const handleEdit = async (poll_uuid, e) => {
     e.preventDefault();
-    await fetch(`/polls/${poll_uuid}/pollInfo`).then(data => data.json()).then(response => setEditData(response.pollData));
+    await fetch(`/polls/${poll_uuid}/pollInfo`)
+      .then(data => data.json())
+      .then(response => setEditData(response.pollData));
     setShowPollForm(true);
     setFormMethod('PATCH');
   }
