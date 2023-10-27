@@ -5,16 +5,11 @@ export const Dashboard = () => {
   const [showPollForm, setShowPollForm] = useState(false);
   const [polls, setPolls] = useState([]);
   const [editData, setEditData] = useState(null);
-  const [formMethod, setFormMethod] = useState('POST');
 
-  const handleSubmit = async (e, formData) => {
+  const handleSubmit = async (e, formData, action, method) => {
     e.preventDefault();
-
-    if (formMethod === 'POST') {
-      await fetch('/polls', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-    } else {
-      await fetch(`/polls/${editData.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-    }
+    
+    await fetch(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
     setShowPollForm(false);
     setEditData(null);
   }
@@ -25,12 +20,10 @@ export const Dashboard = () => {
       .then(data => data.json())
       .then(response => setEditData(response.pollData));
     setShowPollForm(true);
-    setFormMethod('PATCH');
   }
 
   const handlePollOpen = () => {
     setShowPollForm(!showPollForm);
-    setFormMethod('POST');
     setEditData(null);
   }
 
