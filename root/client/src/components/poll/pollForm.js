@@ -18,7 +18,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-      
+
     handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
     resetFormData();
   }
@@ -44,8 +44,8 @@ export const PollForm = ({ handleSubmit, editData }) => {
       </label>
       <label htmlFor='inputAvailabilities'>Availabilities
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
-      <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
       </label>
+      <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
       <button type='submit'>{editData ? 'Update' : 'Create'}</button>
     </form>
   );
