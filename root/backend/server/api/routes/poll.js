@@ -15,8 +15,7 @@ router.route('/')
           }
         });
       });
-      res.json({ response: polls });
-      res.end();
+      res.status(200).json({ response: polls });
     } catch(err) {
       console.log(err);
     }
