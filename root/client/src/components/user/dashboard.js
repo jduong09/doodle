@@ -1,25 +1,36 @@
 import { React, useState, useEffect } from 'react';
 import { PollForm } from '../poll/pollForm';
+import { apiRequest } from '../../util/api';
 
 export const Dashboard = () => {
   const [showPollForm, setShowPollForm] = useState(false);
   const [polls, setPolls] = useState([]);
   const [editData, setEditData] = useState(null);
+  const [formError, setFormError] = useState({ name: '', description: '', location: '', duration: '', availabilities: '' });
 
   const handleSubmit = async (e, formData, action, method) => {
     e.preventDefault();
-    
-    await fetch(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-    setShowPollForm(false);
-    setEditData(null);
+    try {
+      const { response } = await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
+      console.log(response);
+      setShowPollForm(false);
+      setEditData(null);
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   const handleEdit = async (poll_uuid, e) => {
     e.preventDefault();
-    await fetch(`/polls/${poll_uuid}/pollInfo`)
-      .then(data => data.json())
-      .then(response => setEditData(response.pollData));
-    setShowPollForm(true);
+    try {
+      // Do we want to do something with success response message?
+      const { pollData, response } = await apiRequest(`/polls/${poll_uuid}/pollInfo`, { method: 'GET' });
+      console.log(response);
+      setEditData(pollData);
+      setShowPollForm(true);
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   const handlePollOpen = () => {
@@ -28,14 +39,16 @@ export const Dashboard = () => {
   }
 
   useEffect(() => {
-    const getPolls = async () => await fetch('/polls').then(data => data.json()).then(result => result.response);
+    const getPolls = async () => await apiRequest('/polls', { method: 'GET' })
+      .then(({ polls, response }) => {
+        console.log(response);
+        setPolls(polls);
+      })
+      .catch(err => {
+        console.error(err);
+      })
 
-    try {
-      const polls = getPolls();
-      polls.then(response => setPolls(response));
-    } catch(error) {
-      console.log(error);
-    }
+      getPolls();
   }, [showPollForm]);
 
   const arrPolls = polls.map((poll, idx) => {

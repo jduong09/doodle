@@ -15,9 +15,9 @@ router.route('/')
           }
         });
       });
-      res.status(200).json({ response: polls });
+      res.status(200).json({ response: 'Successfully retrieved all polls', polls });
     } catch(err) {
-      console.log(err);
+      res.status(400).json({ response: 'Error: failure to retrieve all polls.' });
     }
   })
   .post(async (req, res) => {
@@ -34,9 +34,9 @@ router.route('/')
   
       const poll = new Poll(pollData);
       await poll.save();
-      res.end();
+      res.status(200).json({ response: 'Successfully created poll.' });
     } catch(err) {
-      console.log(err);
+      res.status(400).json({ response: 'Failure to create poll.' });
     }
   })
 
@@ -53,27 +53,29 @@ router.patch('/:pollId', async (req, res) => {
     }
 
     await Poll.findOneAndUpdate({ _id: req.params.pollId }, pollData);
-    res.end();
+    res.status(200).json({ response: 'Successfully updated poll.' });
   } catch(err) {
-    console.log(err);
+    res.status(400).json({ response: 'Failure to update poll.' });
   }
 });
 
 router.get('/:pollId/pollInfo', async (req, res) => {
-  const pollData = await Poll.findById(req.params.pollId)
-    .then(data => {
-      return {
-        id: req.params.pollId,
-        name: data.name,
-        description: data.description,
-        availabilities: data.availabilities,
-        location: data.location,
-        duration: data.duration
-      };
-    });
-
-  res.json({ pollData });
-  res.end();
+  try {
+    const pollData = await Poll.findById(req.params.pollId)
+      .then(data => {
+        return {
+          id: req.params.pollId,
+          name: data.name,
+          description: data.description,
+          availabilities: data.availabilities,
+          location: data.location,
+          duration: data.duration
+        };
+      });
+    res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
+  } catch(err) {
+    res.status(400).json({ response: 'Failure to get poll data.' });
+  }
 });
 
 module.exports = router;
