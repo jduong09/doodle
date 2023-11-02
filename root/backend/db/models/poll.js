@@ -7,10 +7,10 @@ const Poll = mongoose.model(
     name: { type: String, required: true},
     // author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     description: { type: String, required: false },
-    // { 'Day': 'Time start?' }
     availabilities: { type: Object, required: true },
     location: { type: String },
-    duration: { type: Number }
+    duration: { type: Number },
+    responses: { type: Object },
   }, {
     timestamps: true
   })

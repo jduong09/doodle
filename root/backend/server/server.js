@@ -60,6 +60,33 @@ app.get('/polls/all', async (req, res, next) => {
   }
 });
 
+app.get('/polls/:pollUuid/pollInfo', async (req, res, next) => {
+  console.log('hit get poll detail route');
+  try {
+    const pollData = await Poll.findById(req.params.pollUuid).then(data => {
+      return {
+        id: req.params.pollUuid,
+        name: data.name,
+        description: data.description,
+        availabilities: data.availabilities,
+        location: data.location,
+        duration: data.duration
+      };
+    });
+    res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
+  } catch(err) {
+    res.status(400).json({ response: 'Failure to get poll data.' });
+  }
+});
+
+app.post('/polls/:pollUuid/response', async (req, res, next) => {
+  console.log('hit poll response route');
+  const { name, availabilities: choices } = req.body;
+  try {
+
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`App is listening on ${PORT}`)
 });

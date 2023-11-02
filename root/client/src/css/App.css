@@ -37,13 +37,13 @@ button:hover {
   cursor: pointer;
 }
 
-#list-polls {
+#list-polls, #ul-availabilities {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
 }
 
-#list-polls > li {
+#list-polls > li, #ul-availabilities > li {
   padding: 1.5rem 1rem;
   border: 2px solid skyblue;
   text-align: center;

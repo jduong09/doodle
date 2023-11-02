@@ -1,0 +1,32 @@
+#div-poll-description {
+  padding: 1rem;
+  border-bottom: 1px solid black;
+}
+
+#ul-poll-description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#ul-availabilities {
+  margin-top: 1rem;
+}
+
+#ul-availabilities > li {
+  text-align: start;
+}
+
+#ul-availabilities > li > button {
+  margin-top: 4rem;
+}
+
+#div-form-response {
+  padding: 2rem;
+  border: 2px solid black;
+}
+
+.btn-meeting-select.selected {
+  background-color: skyblue;
+  border-color: skyblue;
+}
