@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { AvailabilitiesList } from './availabilitiesTable';
 
-export const ResponseForm = ({ pollId, availabilities, responses }) => {
+export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
   const [name, setName] = useState('');
   const [choices, setChoices] = useState({});
 
@@ -39,7 +39,7 @@ export const ResponseForm = ({ pollId, availabilities, responses }) => {
     e.preventDefault();
 
     try {
-      await fetch(`/polls/${pollId}/response`, {
+      await fetch(`/polls/${pollUuid}/response`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

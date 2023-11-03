@@ -34,7 +34,7 @@ export const PollDetail = () => {
             <li>Location:{location}</li>
           </ul>
         </div>
-        {availabilities && <ResponseForm availabilities={availabilities} responses={responses} />}
+        {availabilities && <ResponseForm pollUuid={pollUuid} availabilities={availabilities} responses={responses} />}
       </main>
     </div>
   );

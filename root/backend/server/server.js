@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const Poll = require( '../db/models/poll');
+const crypto = require('crypto');
 
 dotenv.config();
 
@@ -80,10 +81,33 @@ app.get('/polls/:pollUuid/pollInfo', async (req, res, next) => {
 });
 
 app.post('/polls/:pollUuid/response', async (req, res, next) => {
-  console.log('hit poll response route');
-  const { name, availabilities: choices } = req.body;
-  try {
+  const { name, choices } = req.body;
+  const userUuid = crypto.randomBytes(24).toString('hex');
 
+  try {
+    const responsesData = await Poll.findById(req.params.pollUuid).then(data => {
+      return {
+        responses: data.responses
+      }
+    });
+
+    let newResponseObj = {};
+
+    if (responsesData['responses']) {
+      newResponseObj = {
+        ...responsesData['responses'],
+      }
+    }
+  
+    newResponseObj[userUuid] = {
+      name: name,
+      availabilities: choices
+    }
+  
+    const response = await Poll.findOneAndUpdate({ _id: req.params.pollUuid }, { responses: newResponseObj });
+    res.status(200).json({ response: 'Successfully added response.', data: response });
+  } catch(err) {
+    res.status(400).json({ response: 'Failure to create response.' });
   }
 });
 
