@@ -3,34 +3,20 @@ import { AvailabilitiesList } from './availabilitiesTable';
 
 export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
   const [name, setName] = useState('');
-  const [choices, setChoices] = useState({});
+  const [choices, setChoices] = useState([]);
 
   const handleUserChoice = (e) => {
     e.preventDefault();
     const timestamp = e.target.parentElement.getAttribute('data-timestamp');
-    const date = timestamp.slice(0, 10);
-    const time = timestamp.slice(11, 19);
-    const newChoicesObj = { ...choices };
+    console.log(timestamp);
+    let newChoicesObj = [...choices];
 
-    // if choices does not have this date yet.
-    if (!newChoicesObj[date]) {
-      newChoicesObj[date] = [time];
+    if (!newChoicesObj.includes(timestamp)) {
+      newChoicesObj.push(timestamp)
       e.target.classList.add('selected');
-    // if this date already has this time selected, then this user choice will unselect it.
-    } else if (newChoicesObj[date].includes(time)) {
-      const array = newChoicesObj[date].filter((startTime) => startTime !== time);
-      // If unselecting the choice causes this date to have no more times, we delete the key
-      if (!array.length) {
-        delete newChoicesObj[date];
-      // Else we just filter it out and leave the selected times from this specific date.
-      } else {
-        newChoicesObj[date] = array;
-      }
-      e.target.classList.remove('selected');
-    // Choices obj has date already, and is being selected, so add. 
     } else {
-      newChoicesObj[date] = [...newChoicesObj[date], time];
-      e.target.classList.add('selected');
+      newChoicesObj = choices.filter((chosenTimestamps) => chosenTimestamps !== timestamp);
+      e.target.classList.remove('selected');
     }
     setChoices(newChoicesObj);
   }

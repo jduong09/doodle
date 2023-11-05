@@ -62,7 +62,6 @@ app.get('/polls/all', async (req, res, next) => {
 });
 
 app.get('/polls/:pollUuid/pollInfo', async (req, res, next) => {
-  console.log('hit get poll detail route');
   try {
     const pollData = await Poll.findById(req.params.pollUuid).then(data => {
       return {
@@ -71,7 +70,8 @@ app.get('/polls/:pollUuid/pollInfo', async (req, res, next) => {
         description: data.description,
         availabilities: data.availabilities,
         location: data.location,
-        duration: data.duration
+        duration: data.duration,
+        responses: data.responses
       };
     });
     res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
@@ -86,23 +86,26 @@ app.post('/polls/:pollUuid/response', async (req, res, next) => {
 
   try {
     const responsesData = await Poll.findById(req.params.pollUuid).then(data => {
-      return {
-        responses: data.responses
-      }
+      return data.responses;
     });
-
+  
     let newResponseObj = {};
 
-    if (responsesData['responses']) {
+    if (responsesData) {
       newResponseObj = {
-        ...responsesData['responses'],
+        ...responsesData,
       }
     }
-  
-    newResponseObj[userUuid] = {
-      name: name,
-      availabilities: choices
-    }
+
+    choices.forEach((timestamp) => {
+      if (newResponseObj[timestamp]) {
+        newResponseObj[timestamp][userUuid] = name;
+      } else {
+        newResponseObj[timestamp] = {
+          [userUuid]: name
+        }
+      }
+    });
   
     const response = await Poll.findOneAndUpdate({ _id: req.params.pollUuid }, { responses: newResponseObj });
     res.status(200).json({ response: 'Successfully added response.', data: response });

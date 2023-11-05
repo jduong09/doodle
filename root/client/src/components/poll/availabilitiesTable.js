@@ -5,25 +5,34 @@ export const AvailabilitiesList = ({ availabilities, responses, duration, choice
   const [listItems, setListItems] = useState([]);
   
   useEffect(() => {
-    // console.log(availabilities);
     const newListItems = [];
     Object.keys(availabilities).forEach((date) => {
-      // 2023-10-29, 2023-10-31
       availabilities[date].forEach((startTime) => {
+        const participants = [];
         const dateObject = new Date(`${date}T${startTime}.000Z`);
         const timeFrame = calculateTimeFrame(startTime, duration);
-        // Logic to figure out check which partipants have voted on this date and time.
-        newListItems.push({ date: dateObject.toDateString(), time: timeFrame, timestamp: `${date}T${startTime}.000Z` });
+        if (Object.keys(responses[`${date}T${startTime}.000Z`]).length) {
+          for (const userUuid in responses[`${date}T${startTime}.000Z`]) {
+            participants.push(responses[`${date}T${startTime}.000Z`][userUuid]);
+          }
+        }
+
+        newListItems.push({ date: dateObject.toDateString(), time: timeFrame, timestamp: `${date}T${startTime}.000Z`, participants });
       });
     });
     setListItems(newListItems);
   }, []);
 
   const listAvailabilities = listItems.map((listItem, idx) => {
+    const participants = listItem.participants.map((name, participantIdx) => {
+      return <li key={participantIdx}>{name}</li>
+    });
+
     return (
       <li key={idx} data-timestamp={listItem.timestamp}>
         <h2>{listItem.date}</h2>
         <h3>{listItem.time}</h3>
+        <ul>{participants}</ul>
         <button className="btn-meeting-select" onClick={(e) => handleUserChoice(e)}>Select Time</button>
       </li>
     )
