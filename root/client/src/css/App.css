@@ -3,8 +3,11 @@ header {
   border-bottom: 2px solid black;
 }
 
-h1 {
+h1, h2, h3 {
   font-weight: 700;
+}
+
+h1 {
   font-size: 2rem;
   text-align: center;
 }
@@ -23,7 +26,6 @@ main {
 
 #div-main-header > h2 {
   font-size: 1.5rem;
-  font-weight: 700;
 }
 
 button {
@@ -53,7 +55,6 @@ button:hover {
 
 #list-polls > li > h3 {
   font-size: 1.25rem;
-  font-weight: 700;
 }
 
 #list-polls > li > h3, #list-polls > li > div, #list-polls > li > button {

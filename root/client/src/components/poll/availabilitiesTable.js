@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
-import { calculateTimeFrame } from '../../util/tablehelpers';
+import { calculateTimeFrame, getDayOfTheWeek } from '../../util/tablehelpers';
 
-export const AvailabilitiesList = ({ availabilities, responses, duration, choices, handleUserChoice }) => {
+export const AvailabilitiesList = ({ availabilities, responses, duration, handleUserChoice }) => {
   const [listItems, setListItems] = useState([]);
   
   useEffect(() => {
@@ -10,6 +10,7 @@ export const AvailabilitiesList = ({ availabilities, responses, duration, choice
       availabilities[date].forEach((startTime) => {
         const participants = [];
         const dateObject = new Date(`${date}T${startTime}.000Z`);
+        
         const timeFrame = calculateTimeFrame(startTime, duration);
         if (Object.keys(responses[`${date}T${startTime}.000Z`]).length) {
           for (const userUuid in responses[`${date}T${startTime}.000Z`]) {
@@ -17,7 +18,7 @@ export const AvailabilitiesList = ({ availabilities, responses, duration, choice
           }
         }
 
-        newListItems.push({ date: dateObject.toDateString(), time: timeFrame, timestamp: `${date}T${startTime}.000Z`, participants });
+        newListItems.push({ date: dateObject.toLocaleDateString(), day: getDayOfTheWeek(dateObject), time: timeFrame, timestamp: `${date}T${startTime}.000Z`, participants });
       });
     });
     setListItems(newListItems);
@@ -30,9 +31,10 @@ export const AvailabilitiesList = ({ availabilities, responses, duration, choice
 
     return (
       <li key={idx} data-timestamp={listItem.timestamp}>
+        <h2>{listItem.day}</h2>
         <h2>{listItem.date}</h2>
         <h3>{listItem.time}</h3>
-        <ul>{participants}</ul>
+        <ul id="ul-participants">{participants}</ul>
         <button className="btn-meeting-select" onClick={(e) => handleUserChoice(e)}>Select Time</button>
       </li>
     )

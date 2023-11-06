@@ -8,7 +8,6 @@ export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
   const handleUserChoice = (e) => {
     e.preventDefault();
     const timestamp = e.target.parentElement.getAttribute('data-timestamp');
-    console.log(timestamp);
     let newChoicesObj = [...choices];
 
     if (!newChoicesObj.includes(timestamp)) {
@@ -41,15 +40,15 @@ export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
   return (
     <div id="div-form-response">
       <form id="form-response" onSubmit={(e) => handleFormSubmit(e)}>
-        <label htmlFor='name'>Name:
-          <input id='name' name='name' placeholder='Justin' value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
         <AvailabilitiesList
           availabilities={availabilities}
           responses={responses}
           choices={choices}
           handleUserChoice={handleUserChoice}
         />
+        <label htmlFor='name'>Name:
+          <input id='name' name='name' placeholder='Justin' value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
         <button id="btn-submit">Submit Response</button>
       </form>
     </div>
