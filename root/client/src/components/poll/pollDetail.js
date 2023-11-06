@@ -5,7 +5,7 @@ import { ResponseForm } from './responseForm';
 
 export const PollDetail = () => {
   const { pollUuid } = useParams();
-  const [pollData, setPollData] = useState('')
+  const [pollData, setPollData] = useState('');
   
   useEffect(() => {
     const fetchPollData = async () => {
@@ -20,7 +20,7 @@ export const PollDetail = () => {
     fetchPollData().then(data => setPollData(data.pollData));
   }, []);
 
-  const { name, description, location, availabilities, responses } = pollData;
+  const { name, description, duration, location, availabilities, responses } = pollData;
   
   return (
     <div>
@@ -35,7 +35,7 @@ export const PollDetail = () => {
             <li>Location:{location}</li>
           </ul>
         </div>
-        {availabilities && <ResponseForm pollUuid={pollUuid} availabilities={availabilities} responses={responses} />}
+        {availabilities && <ResponseForm pollUuid={pollUuid} availabilities={availabilities} responses={responses} duration={duration} />}
       </main>
     </div>
   );
