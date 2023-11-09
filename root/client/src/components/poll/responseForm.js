@@ -32,6 +32,7 @@ export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
           choices
         })
       });
+      window.location = '/';
     } catch(err) {
       console.error(err);
     }

@@ -49,6 +49,7 @@ app.get('/polls/all', async (req, res, next) => {
     const polls = await Poll.find({}).then(data => {
       return data.map(poll => {
         return {
+          id: poll._id.toString(),
           title: poll.name,
           location: poll.location
         }
