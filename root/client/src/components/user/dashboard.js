@@ -24,8 +24,7 @@ export const Dashboard = () => {
     e.preventDefault();
     try {
       // Do we want to do something with success response message?
-      const { pollData, response } = await apiRequest(`/polls/${poll_uuid}/pollInfo`, { method: 'GET' });
-      console.log(response);
+      const { pollData } = await apiRequest(`/polls/${poll_uuid}/pollInfo`, { method: 'GET' });
       setEditData(pollData);
       setShowPollForm(true);
     } catch(err) {
@@ -41,7 +40,6 @@ export const Dashboard = () => {
   useEffect(() => {
     const getPolls = async () => await apiRequest('/polls', { method: 'GET' })
       .then(({ polls, response }) => {
-        console.log(response);
         setPolls(polls);
       })
       .catch(err => {

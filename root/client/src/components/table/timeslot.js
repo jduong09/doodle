@@ -2,13 +2,28 @@ import { React, useState, useEffect } from 'react';
 import { classTopPosition, classHeight, getDbTime } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
-export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities, activated }) => {
-  const [selected, setSelected] = useState(activated);
-
-  useEffect(() => setSelected(activated), [activated]);
+export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities, hour }) => {
+  const [selected, setSelected] = useState(false);
+  
+  useEffect(() => {
+    for (const chosenDate in pollAvailabilities) {
+      if (chosenDate === date) {
+        pollAvailabilities[chosenDate].forEach((time) => {
+          const dateObject = new Date(`${chosenDate}T${time}.000Z`);
+          const convertedLocalTime = dateObject.toTimeString().slice(0, 6);
+          const arrTime = convertedLocalTime.split(':');
+          if (parseInt(arrTime[0]) === hour) {
+            setSelected(true);
+          }
+        });
+      }
+    }
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    console.log('selected', startTime);
     
     const dbTime = getDbTime(date, startTime);
    
@@ -29,6 +44,8 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
 
   const handleDelete = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    console.log('Handle Delete: ', e.target);
 
     const newPollAvail = {
       ...pollAvailabilities,

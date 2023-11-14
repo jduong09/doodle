@@ -22,6 +22,8 @@ export const PollForm = ({ handleSubmit, editData }) => {
     handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
     resetFormData();
   }
+
+  console.log(pollAvailabilities);
   
   return (
     <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>

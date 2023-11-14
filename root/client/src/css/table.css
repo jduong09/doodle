@@ -64,7 +64,7 @@ caption {
 }
 
 .cell-half-hour > span {
-  width: 100%;
+  width: 75%;
   position: absolute;
   left: 0;
   display: flex;
@@ -105,4 +105,8 @@ caption {
 
 .p-45 {
   top: 75%;
+}
+
+.btn-close {
+  padding: .25rem .5rem;
 }
