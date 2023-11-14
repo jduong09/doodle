@@ -24,7 +24,21 @@ export const PollDetailAdmin = () => {
     e.preventDefault();
     // route to update form.
     window.location = `http://localhost:3000/polls/${pollUuid}/update`
-  } 
+  }
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`/admin/${pollUuid}`, { method: 'DELETE' });
+
+    const data = response.json();
+
+    if (response.ok) {
+      console.log(data);
+      window.location = '/';
+    } else {
+      console.error(data);
+    }
+  };
 
   const { name, duration, availabilities, responses } = pollData;
 
@@ -34,6 +48,7 @@ export const PollDetailAdmin = () => {
         <span>Doodle</span>
         <h1>{name}</h1>
         <button onClick={(e) => handleUpdate(e)}>Update Poll</button>
+        <button onClick={handleDelete}>Delete Poll</button>
       </header>
       <main>
         <div id="div-availabilities">

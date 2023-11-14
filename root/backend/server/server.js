@@ -44,6 +44,15 @@ app.post('/polls', async (req, res) => {
   }
 });
 
+app.delete('/admin/:pollUuid', async (req, res, next) => {
+  try {
+    await Poll.findByIdAndDelete(req.params.pollUuid).then(data => data);
+    res.status(200).json({ response: 'Successfully deleted poll data.' });
+  } catch(err) {
+    res.status(400).json({ response: 'Failure to delete poll.' });
+  }
+});
+
 app.get('/polls/all', async (req, res, next) => {
   try {
     const polls = await Poll.find({}).then(data => {
