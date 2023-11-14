@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { classTopPosition, classHeight, getDbTime } from '../../util/tablehelpers';
+import { classTopPosition, classHeight, getDbTime, createPossibleTimeBlock } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
 export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities, hour }) => {
@@ -20,10 +20,27 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
     }
   }, []);
 
+  const handleMouseenter = (e) => {
+    e.preventDefault();
+    console.log(e.target.children.length);
+
+    if (e.target.children.length === 0) {
+      const possibleTimeBlock = createPossibleTimeBlock(startTime, duration);
+      e.target.appendChild(possibleTimeBlock);
+    }
+  }
+
+  const handleMouseleave = (e) => {
+    e.preventDefault();
+    
+    if (e.target.querySelector('span.temp-timeblock')) {
+      e.target.querySelector('span.temp-timeblock').remove();
+    }
+  }
+
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('selected', startTime);
     
     const dbTime = getDbTime(date, startTime);
    
@@ -69,9 +86,13 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
   const timeSlotTimeStamp = new Date(`${date}T${startTime}`);
 
   return (
-    <div className={`cell-half-hour ${timeSlotTimeStamp < currentTimestamp ? 'disabled' : ''}`} data-time={startTime} onClick={(e) => handleClick(e)}>
+    <div
+      className={`cell-half-hour ${timeSlotTimeStamp < currentTimestamp ? 'disabled' : ''}`}
+      data-time={startTime} onClick={(e) => handleClick(e)}
+      onMouseEnter={handleMouseenter}
+      onMouseLeave={handleMouseleave}>
       {selected && 
-        <TimeBlock 
+        <TimeBlock
           handleDelete={handleDelete}
           startTime={startTime}
           duration={duration}

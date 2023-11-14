@@ -37,7 +37,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
         <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
       </label>
       <label htmlFor='pollDuration'>Duration:
-        <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(e.target.value)}>
+        <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(parseInt(e.target.value))}>
           <option value='15'>15 mins</option>
           <option value='30'>30 mins</option>
           <option value='60'>1 hour</option>

@@ -37,17 +37,33 @@ export const classTopPosition = (minutes) => {
 
 export const classHeight = (duration) => {
   if (duration === 15) {
-    return 'h-25';
+    return 'h-15';
   } else if (duration === 30) {
-    return 'h-50';
+    return 'h-30';
   } else if (duration === 45) {
-    return 'h-75';
+    return 'h-45';
   } else if (duration === 60) {
-    return 'h-100';
+    return 'h-60';
+  } else if (duration === 120) {
+    return 'h-120'
   }
 }
 
 export const getDbTime = (date, startTime) => {
   const timestamp = new Date(`${date}T${startTime}`);
   return Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
+}
+
+export const createPossibleTimeBlock = (startTime, duration) => {
+  const span = document.createElement('span');
+  const [hour, minutes] = startTime.split(':');
+  const twelveHourStartTime = `${hour < 12  ? `${hour === '00' ? 12 : hour}:${minutes}` : `${hour - 12 === 0 ? 12 : hour - 12}:${minutes}`}`;
+  const timeframe = calculateTimeFrame(twelveHourStartTime, duration);
+  console.log(timeframe);
+  const position = classTopPosition(minutes);
+  const height = classHeight(duration);
+
+  span.innerHTML = timeframe;
+  span.classList.add('temp-timeblock', position, height);
+  return span;
 }
