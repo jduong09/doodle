@@ -3,25 +3,23 @@ html {
 }
 
 table {
-  border-collapse: collapse;
+  display: block;
+  width: fit-content;
+  border-collapse: separate;
   border: 2px solid rgb(200,200,200);
   letter-spacing: 1px;
   font-size: 0.8rem;
-  display: block;
-  width: fit-content;
   margin: 0 auto;
 }
 
+/*
 td, th {
   border: 1px solid rgb(190,190,190);
 }
+*/
 
 th {
   padding: 1rem;
-}
-
-td {
-  padding: 0 1rem;
 }
 
 th {
@@ -39,10 +37,11 @@ tr:nth-child(even) td {
 tr:nth-child(odd) td {
   background-color: rgb(245,245,245);
 }
-
+/*
 caption {
   padding: 10px;
 }
+*/
 
 .cell-time-slot {
   position: relative;
@@ -59,9 +58,11 @@ caption {
   border-bottom: 1px dashed grey;
 }
 
+/*
 .cell-time-slot > div:last-child {
   border-bottom: 0;
 }
+*/
 
 .cell-half-hour > span {
   width: 75%;
@@ -69,8 +70,7 @@ caption {
   left: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 8px;
+  justify-content: space-between;  
   background-color: salmon;
   z-index: 10;
 }
