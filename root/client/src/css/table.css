@@ -3,33 +3,28 @@ html {
 }
 
 table {
-  border-collapse: collapse;
-  border: 2px solid rgb(200,200,200);
-  letter-spacing: 1px;
-  font-size: 0.8rem;
   display: block;
   width: fit-content;
+  border-collapse: separate;
+  border: 1px solid black;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
   margin: 0 auto;
-}
-
-td, th {
-  border: 1px solid rgb(190,190,190);
 }
 
 th {
   padding: 1rem;
-}
-
-td {
-  padding: 0 1rem;
-}
-
-th {
+  border: 1px solid black;
   background-color: rgb(235,235,235);
 }
 
 td {
+  vertical-align: middle;
   text-align: center;
+}
+
+tr > td:first-child {
+  border: 1px solid black;
 }
 
 tr:nth-child(even) td {
@@ -40,13 +35,10 @@ tr:nth-child(odd) td {
   background-color: rgb(245,245,245);
 }
 
-caption {
-  padding: 10px;
-}
-
 .cell-time-slot {
   position: relative;
   padding: 0;
+  height: 100px;
 }
 
 .cell-half-hour.disabled {
@@ -55,40 +47,59 @@ caption {
 }
 
 .cell-time-slot > div {
-  padding: .75rem;
-  border-bottom: 1px dashed grey;
+  border-bottom: 1px solid grey;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 25%;
 }
 
 .cell-time-slot > div:last-child {
-  border-bottom: 0;
+  border-bottom: 1px solid black;
 }
 
-.cell-half-hour > span {
+.span-time-block, .temp-timeblock {
   width: 100%;
   position: absolute;
   left: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 8px;
-  background-color: salmon;
+  justify-content: space-between;  
+  background-color: #fa8072;
   z-index: 10;
 }
 
-.h-25 {
+.span-time-block {
+  pointer-events: none;
+}
+
+.span-time-block > button {
+  pointer-events: auto;
+}
+
+.temp-timeblock {
+  background-color: #F85441;
+  pointer-events: none;
+}
+
+.h-15 {
   height: 25%;
 }
 
-.h-50 {
+.h-30 {
   height: 50%;
 }
 
-.h-75 {
+.h-45 {
   height: 75%;
 }
 
-.h-100 {
+.h-60 {
   height: 100%;
+}
+
+.h-120 {
+  height: 200%;
 }
 
 .p-0 {
@@ -105,4 +116,8 @@ caption {
 
 .p-45 {
   top: 75%;
+}
+
+.btn-close {
+  padding: .25rem .5rem;
 }

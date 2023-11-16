@@ -1,15 +1,30 @@
 import { React, useState } from 'react';
 import { Table } from '../table/table';
 
-export const PollForm = ({ handleSubmit }) => {
-  const [pollName, setPollName] = useState('');
-  const [pollDescription, setPollDescription] = useState('');
-  const [pollLocation, setPollLocation] = useState('');
-  const [pollDuration, setPollDuration] = useState('15');
-  const [pollAvailabilities, setPollAvailabilities] = useState({});
+export const PollForm = ({ handleSubmit, editData }) => {
+  const [pollName, setPollName] = useState(editData ? editData.name : '');
+  const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
+  const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
+  const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) / 60 : '15');
+  const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
 
+  const resetFormData = () => {
+    setPollName('');
+    setPollDescription('');
+    setPollLocation('');
+    setPollDuration('15');
+    setPollAvailabilities({})
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
+    resetFormData();
+  }
+  
   return (
-    <form method='POST' action='/polls' onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>
+    <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
       <label htmlFor='inputName'>Name:
         <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
       </label>
@@ -20,7 +35,7 @@ export const PollForm = ({ handleSubmit }) => {
         <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
       </label>
       <label htmlFor='pollDuration'>Duration:
-        <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(e.target.value)}>
+        <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(parseInt(e.target.value))}>
           <option value='15'>15 mins</option>
           <option value='30'>30 mins</option>
           <option value='60'>1 hour</option>
@@ -29,9 +44,9 @@ export const PollForm = ({ handleSubmit }) => {
       </label>
       <label htmlFor='inputAvailabilities'>Availabilities
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
-        <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
       </label>
-      <button type='submit'>Create Poll</button>
+      <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
+      <button type='submit'>{editData ? 'Update' : 'Create'}</button>
     </form>
-  )
-}
+  );
+};
