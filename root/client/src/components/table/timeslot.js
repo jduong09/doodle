@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { classTopPosition, classHeight, getDbTime, createPossibleTimeBlock } from '../../util/tablehelpers';
+import { classTopPosition, getDbTime, createPossibleTimeBlock } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
 export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities, hour }) => {
@@ -97,7 +97,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
           startTime={startTime}
           duration={duration}
           classTopPosition={classTopPosition(startTime.split(':')[1])}
-          classHeight={classHeight(duration)}
+          classHeight={`h-${duration}`}
         />
       }
     </div>
