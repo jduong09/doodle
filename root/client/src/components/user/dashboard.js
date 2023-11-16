@@ -32,7 +32,6 @@ export const Dashboard = () => {
     e.preventDefault();
 
     const pollId = e.target.parentElement.getAttribute('data-poll-id');
-
     window.location = `/admin/${pollId}`;
   }
 
@@ -45,7 +44,7 @@ export const Dashboard = () => {
         <button onClick={handleSubmitResponse}>Submit Response</button>
         <button onClick={handleAdminPage}>Admin</button>
       </li>
-    )
+    );
   });
 
   return (

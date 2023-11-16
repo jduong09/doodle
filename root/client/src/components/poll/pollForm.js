@@ -1,12 +1,23 @@
 import { React, useState } from 'react';
 import { Table } from '../table/table';
 
-export const PollForm = ({ handleSubmit }) => {
+export const PollForm = () => {
   const [pollName, setPollName] = useState('');
   const [pollDescription, setPollDescription] = useState('');
   const [pollLocation, setPollLocation] = useState('');
   const [pollDuration, setPollDuration] = useState('15');
   const [pollAvailabilities, setPollAvailabilities] = useState({});
+
+  const handleSubmit = async (e, formData) => {
+    e.preventDefault();  
+    try {
+      const response = await fetch('/polls', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+      const data = await response.json();
+      window.location = `/polls/${data.pollUuid}/checkout`;
+    } catch(err) {
+      console.error(err);
+    }
+  }
 
   return (
     <form method='POST' action='/polls' onSubmit={(e) => handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities })}>

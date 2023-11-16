@@ -34,11 +34,13 @@ app.post('/polls', async (req, res) => {
       description: pollDescription,
       location: pollLocation,
       duration: parseInt(pollDuration) * 60,
-      availabilities: pollAvailabilities
+      availabilities: pollAvailabilities,
+      responses: {}
     }
 
     const poll = new Poll(pollData);
-    await poll.save();
+    const data = await poll.save();
+    res.status(200).json({ pollUuid: data._id.toString() });
   } catch(err) {
     console.log(err);
   }

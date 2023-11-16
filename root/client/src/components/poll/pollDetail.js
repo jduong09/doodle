@@ -19,6 +19,7 @@ export const PollDetail = () => {
 
     fetchPollData().then(data => setPollData(data.pollData));
   }, []);
+  console.log(pollData);
 
   const { name, description, duration, location, availabilities, responses } = pollData;
   

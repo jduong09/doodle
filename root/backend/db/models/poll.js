@@ -12,7 +12,8 @@ const Poll = mongoose.model(
     duration: { type: Number },
     responses: { type: Object },
   }, {
-    timestamps: true
+    timestamps: true,
+    minimize: false
   })
 );
 
