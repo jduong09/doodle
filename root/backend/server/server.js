@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const router = require('./api/router');
+const Poll = require('../db/models/poll');
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ app.use(router);
 
 app.delete('/admin/:pollUuid', async (req, res, next) => {
   try {
-    await Poll.findByIdAndDelete(req.params.pollUuid).then(data => data);
+    await Poll.findByIdAndDelete({ _id: req.params.pollUuid }).then(data => data);
     res.status(200).json({ response: 'Successfully deleted poll data.' });
   } catch(err) {
     res.status(400).json({ response: 'Failure to delete poll.' });
