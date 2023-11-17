@@ -2,8 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
-const Poll = require( '../db/models/poll');
-const crypto = require('crypto');
+const router = require('./api/router');
 
 dotenv.config();
 
@@ -25,53 +24,7 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'mongo connection error'));
 
-app.post('/polls', async (req, res) => {
-  const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities } = req.body;
-
-  try {
-    const pollData = {
-      name: pollName,
-      description: pollDescription,
-      location: pollLocation,
-      duration: parseInt(pollDuration) * 60,
-      availabilities: pollAvailabilities,
-      responses: {}
-    }
-
-    const poll = new Poll(pollData);
-    const data = await poll.save();
-    res.status(200).json({ pollUuid: data._id.toString() });
-  } catch(err) {
-    console.log(err);
-  }
-});
-
-app.delete('/admin/:pollUuid', async (req, res, next) => {
-  try {
-    await Poll.findByIdAndDelete(req.params.pollUuid).then(data => data);
-    res.status(200).json({ response: 'Successfully deleted poll data.' });
-  } catch(err) {
-    res.status(400).json({ response: 'Failure to delete poll.' });
-  }
-});
-
-app.get('/polls/all', async (req, res, next) => {
-  try {
-    const polls = await Poll.find({}).then(data => {
-      return data.map(poll => {
-        return {
-          id: poll._id.toString(),
-          title: poll.name,
-          location: poll.location
-        }
-      });
-    });
-    res.json({ response: polls });
-    res.end();
-  } catch(err) {
-    console.log(err);
-  }
-});
+app.use(router);
 
 app.get('/polls/:pollUuid/pollInfo', async (req, res, next) => {
   try {

@@ -107,7 +107,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
 
   const handlePrevWeek = (e) => {
     e.preventDefault();
-    // Take each day of this.state.week. Move that back 7 days.
     const newStateWeek = {};
 
     for (const day in week) {
