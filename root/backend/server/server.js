@@ -26,58 +26,15 @@ db.on('error', console.error.bind(console, 'mongo connection error'));
 
 app.use(router);
 
-app.get('/polls/:pollUuid/pollInfo', async (req, res, next) => {
+app.delete('/admin/:pollUuid', async (req, res, next) => {
   try {
-    const pollData = await Poll.findById(req.params.pollUuid).then(data => {
-      return {
-        id: req.params.pollUuid,
-        name: data.name,
-        description: data.description,
-        availabilities: data.availabilities,
-        location: data.location,
-        duration: data.duration,
-        responses: data.responses
-      };
-    });
-    res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
+    await Poll.findByIdAndDelete(req.params.pollUuid).then(data => data);
+    res.status(200).json({ response: 'Successfully deleted poll data.' });
   } catch(err) {
-    res.status(400).json({ response: 'Failure to get poll data.' });
+    res.status(400).json({ response: 'Failure to delete poll.' });
   }
 });
 
-app.post('/polls/:pollUuid/response', async (req, res, next) => {
-  const { name, choices } = req.body;
-  const userUuid = crypto.randomBytes(24).toString('hex');
-
-  try {
-    const responsesData = await Poll.findById(req.params.pollUuid).then(data => {
-      return data.responses;
-    });
-  
-    let newResponseObj = {};
-
-    if (responsesData) {
-      newResponseObj = {
-        ...responsesData,
-      }
-    }
-
-    choices.forEach((timestamp) => {
-      if (newResponseObj[timestamp]) {
-        newResponseObj[timestamp][userUuid] = name;
-      } else {
-        newResponseObj[timestamp] = {
-          [userUuid]: name
-        }
-      }
-    });
-  
-    const response = await Poll.findOneAndUpdate({ _id: req.params.pollUuid }, { responses: newResponseObj });
-    res.status(200).json({ response: 'Successfully added response.', data: response });
-  } catch(err) {
-    res.status(400).json({ response: 'Failure to create response.' });
-  }
-});
 
 app.listen(PORT, () => {
   console.log(`App is listening on ${PORT}`)

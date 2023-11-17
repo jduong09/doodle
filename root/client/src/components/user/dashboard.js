@@ -69,7 +69,7 @@ export const Dashboard = () => {
       <li key={idx} data-poll-id={poll.id}>
         <h3>{poll.title}</h3>
         <div>{poll.location}</div>
-        <button>Edit</button>
+        <button onClick={(e) => handleEdit(poll.id, e)}>Edit</button>
         <button onClick={handleSubmitResponse}>Submit Response</button>
         <button onClick={handleAdminPage}>Admin</button>
       </li>

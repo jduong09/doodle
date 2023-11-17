@@ -40,6 +40,38 @@ export const getDbTime = (date, startTime) => {
   return Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC' }).format(timestamp);
 }
 
+export const getDayOfTheWeek = (dateObj) => {
+  const utcDay = dateObj.getUTCDay();
+  let dayOfWeek;
+
+  switch(utcDay) {
+    case 0:
+      dayOfWeek = 'Sunday';
+      break;
+    case 1:
+      dayOfWeek = 'Monday';
+      break;
+    case 2:
+      dayOfWeek = 'Tuesday';
+      break;
+    case 3:
+      dayOfWeek = 'Wednesday';
+      break;
+    case 4:
+      dayOfWeek = 'Thursday';
+      break;
+    case 5:
+      dayOfWeek = 'Friday';
+      break;
+    case 6:
+      dayOfWeek = 'Saturday';
+      break;
+    default:
+      break;
+  }
+  return dayOfWeek;
+}
+
 export const createPossibleTimeBlock = (startTime, duration) => {
   const span = document.createElement('span');
   const [hour, minutes] = startTime.split(':');

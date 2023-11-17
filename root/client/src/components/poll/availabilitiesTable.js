@@ -12,7 +12,7 @@ export const AvailabilitiesList = ({ availabilities, responses, duration, handle
         const dateObject = new Date(`${date}T${startTime}.000Z`);
         
         const timeFrame = calculateTimeFrame(startTime, duration);
-        if (Object.keys(responses) && Object.keys(responses[`${date}T${startTime}.000Z`]).length) {
+        if (Object.keys(responses).length && responses[`${date}T${startTime}.000Z`]) {
           for (const userUuid in responses[`${date}T${startTime}.000Z`]) {
             participants.push(responses[`${date}T${startTime}.000Z`][userUuid]);
           }
