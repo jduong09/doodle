@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { AvailabilitiesList } from './availabilitiesTable';
 
-export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
+export const ResponseForm = ({ pollUuid, availabilities, responses, duration }) => {
   const [name, setName] = useState('');
   const [choices, setChoices] = useState([]);
 
@@ -46,6 +46,7 @@ export const ResponseForm = ({ pollUuid, availabilities, responses }) => {
           responses={responses}
           choices={choices}
           handleUserChoice={handleUserChoice}
+          duration={duration}
         />
         <label htmlFor='name'>Name:
           <input id='name' name='name' placeholder='Justin' value={name} onChange={(e) => setName(e.target.value)} required/>

@@ -1,24 +1,32 @@
 export const calculateTimeFrame = (startTime, duration) => {
-  const splitTime = startTime.split(':');
-
-  const minutes = parseInt(splitTime[1]);
-  let newMinutes = minutes + parseInt(duration);
-  let adjustedHour = splitTime[0] > 12 ? `${parseInt(splitTime[0]) - 12}` : splitTime[0];
-
+  const [hour, minutes] = startTime.split(':');
+  console.log(hour);
+  const timeSuffix = hour > 12 ? 'PM' : 'AM';
+  const convertedHours = hour < 12  ? `${hour === '00' ? 12 : hour}` : `${hour - 12 === 0 ? 12 : hour - 12}`;
+  console.log(convertedHours);
+  let newMinutes = parseInt(minutes) + parseInt(duration);
+  
   if (newMinutes < 60) {
-    if (splitTime[0] === '0') {
-      return `${12}:${splitTime[1]} - ${adjustedHour}:${newMinutes}`;
+    if (convertedHours === '0') {
+      return `12:${minutes}${timeSuffix} - 12:${newMinutes}${timeSuffix}`;
     } else {
-      return `${adjustedHour}:${splitTime[1]} - ${adjustedHour}:${newMinutes}`;
+      return `${convertedHours}:${minutes}${timeSuffix} - ${convertedHours}:${newMinutes}${timeSuffix}`;
     }
   } else {
-    let newHour = newMinutes < 120 ? parseInt(splitTime[0]) + 1 : parseInt(splitTime[0]) + 2;
+    let newHour = newMinutes < 120 ? parseInt(convertedHours) + 1 : parseInt(convertedHours) + 2;
+    console.log(newHour);
     newMinutes = duration < 60 ? newMinutes - 60 : newMinutes - duration;
 
-    if (splitTime[0] === '0') {
-      return `${12}:${splitTime[1]} - ${newHour > 12 ? newHour - 12 : newHour}:${newMinutes === 0 ? '00' : newMinutes}`;
+    let endTimeSuffix = newHour >= 12 ? 'PM' : 'AM';
+
+    if (newHour >= 12 && timeSuffix === 'PM') {
+      endTimeSuffix = 'AM';
+    }
+
+    if (convertedHours === '0') {
+      return `12:${minutes}${timeSuffix} - ${newHour > 12 ? newHour - 12 : newHour}:${newMinutes === 0 ? '00' : newMinutes}${endTimeSuffix}`;
     } else {
-      return `${splitTime[0] > 12 ? `${parseInt(splitTime[0]) - 12}:${splitTime[1]}` : startTime} - ${newHour > 12 ? newHour - 12 : newHour}:${newMinutes === 0 ? '00' : newMinutes}`;
+      return `${convertedHours > 12 ? `${parseInt(convertedHours) - 12}:${minutes}` : `${parseInt(convertedHours)}:${minutes}`}${timeSuffix} - ${newHour > 12 ? newHour - 12 : newHour}:${newMinutes === 0 ? '00' : newMinutes}${endTimeSuffix}`;
     }
   }
 }
