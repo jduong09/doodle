@@ -22,7 +22,6 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
 
   const handleMouseenter = (e) => {
     e.preventDefault();
-    console.log(e.target.children.length);
 
     if (e.target.children.length === 0) {
       const possibleTimeBlock = createPossibleTimeBlock(startTime, duration);
@@ -69,7 +68,6 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
     };
 
     const dbTime = getDbTime(date, startTime);
-
     const array = newPollAvail[date].filter((time) => time !== dbTime);
 
     if (!array.length) {
@@ -94,6 +92,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
       {selected && 
         <TimeBlock
           handleDelete={handleDelete}
+          date={date}
           startTime={startTime}
           duration={duration}
           classTopPosition={classTopPosition(startTime.split(':')[1])}

@@ -9,6 +9,7 @@ export const AvailabilitiesList = ({ availabilities, responses, duration, handle
     Object.keys(availabilities).forEach((date) => {
       availabilities[date].forEach((startTime) => {
         const participants = [];
+        console.log(startTime);
         const dateObject = new Date(`${date}T${startTime}.000Z`);
         const local24StartTime = `${dateObject.getHours()}:${startTime.split(':')[1]}`;
         const timeFrame = calculateTimeFrame(local24StartTime, duration);

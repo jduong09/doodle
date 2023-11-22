@@ -1,9 +1,8 @@
 export const calculateTimeFrame = (startTime, duration) => {
   const [hour, minutes] = startTime.split(':');
   console.log(hour);
-  const timeSuffix = hour > 12 ? 'PM' : 'AM';
-  const convertedHours = hour < 12  ? `${hour === '00' ? 12 : hour}` : `${hour - 12 === 0 ? 12 : hour - 12}`;
-  console.log(convertedHours);
+  const timeSuffix = parseInt(hour) > 12 ? 'PM' : 'AM';
+  const convertedHours = hour < 12  ? `${hour === '00' ? 12 : parseInt(hour)}` : `${hour - 12 === 0 ? 12 : parseInt(hour) - 12}`;
   let newMinutes = parseInt(minutes) + parseInt(duration);
   
   if (newMinutes < 60) {
