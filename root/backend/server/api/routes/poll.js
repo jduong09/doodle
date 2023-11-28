@@ -105,9 +105,7 @@ router.post('/:pollUuid/response', async (req, res, next) => {
           [userUuid]: name
         }
       }
-    });
-    console.log(newResponseObj);
-  
+    });  
     const response = await Poll.findOneAndUpdate({ _id: req.params.pollUuid }, { responses: newResponseObj });
     res.status(200).json({ response: 'Successfully added response.', data: response });
   } catch(err) {

@@ -3,7 +3,6 @@ import { calculateTimeFrame, getDayOfTheWeek } from '../../util/tablehelpers';
 
 export const AvailabilitiesList = ({ availabilities, responses, duration, handleUserChoice }) => {
   const [listItems, setListItems] = useState([]);
-  console.log(availabilities);
   useEffect(() => {
     const newListItems = [];
     Object.keys(availabilities).forEach((date) => {

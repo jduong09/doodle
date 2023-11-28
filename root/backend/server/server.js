@@ -12,8 +12,6 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(bodyParser.json())
 
-// Stable Api Version is used for keeping consistent methods over version upgrades.
-// Create a MongoClient with a MongoClientOptions object to set the Stable Api Version
 const mongoDb = process.env.MONGO_URI;
 
 mongoose.connect(mongoDb, {

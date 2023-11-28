@@ -2,23 +2,24 @@ import { React, useState, useEffect } from 'react';
 import { classTopPosition, getDbTimestamp, createPossibleTimeBlock } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
-export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities, hour }) => {
+export const TimeSlot = ({ week, date, startTime, duration, setPollAvailabilities, pollAvailabilities, hour }) => {
   const [selected, setSelected] = useState(false);
-  
   useEffect(() => {
-    for (const chosenDate in pollAvailabilities) {
-      if (chosenDate === date) {
-        pollAvailabilities[chosenDate].forEach((time) => {
-          const dateObject = new Date(`${chosenDate}T${time}.000Z`);
-          const convertedLocalTime = dateObject.toTimeString().slice(0, 6);
-          const arrTime = convertedLocalTime.split(':');
-          if (parseInt(arrTime[0]) === hour && arrTime[1] === startTime.split(':')[1]) {
-            setSelected(true);
-          }
-        });
+    // Check to see if this timeslot with date and starttime is in the poll availabilities in order to become selected.
+    if (pollAvailabilities.hasOwnProperty(date)) {
+      const timezoneOffset = new Date(Date.now()).getTimezoneOffset();
+      const timezoneOffsetToHour = timezoneOffset / 60;
+      const dateObject = new Date(`${date}T${startTime}:00.000${timezoneOffset > 0 ? '-' : '+'}${timezoneOffsetToHour < 10 ? `0${timezoneOffsetToHour}` : timezoneOffsetToHour}:00`);
+      const convertedUTCTime = dateObject.toISOString().slice(11, 19);
+      if (pollAvailabilities[date].includes(convertedUTCTime)) {
+        setSelected(true);
+      } else {
+        setSelected(false);
       }
+    } else {
+      setSelected(false);
     }
-  }, []);
+  }, [date, week]);
 
   const handleMouseenter = (e) => {
     e.preventDefault();
@@ -56,6 +57,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
       setSelected(true);
       setPollAvailabilities(newPollAvail);
     }
+    console.log(newPollAvail);
   }
 
   const handleDelete = (e) => {
