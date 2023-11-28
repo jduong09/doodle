@@ -3,23 +3,22 @@ import { calculateTimeFrame, getDayOfTheWeek } from '../../util/tablehelpers';
 
 export const AvailabilitiesList = ({ availabilities, responses, duration, handleUserChoice }) => {
   const [listItems, setListItems] = useState([]);
-  
+  console.log(availabilities);
   useEffect(() => {
     const newListItems = [];
     Object.keys(availabilities).forEach((date) => {
       availabilities[date].forEach((startTime) => {
         const participants = [];
-        console.log(startTime);
         const dateObject = new Date(`${date}T${startTime}.000Z`);
         const local24StartTime = `${dateObject.getHours()}:${startTime.split(':')[1]}`;
+        
         const timeFrame = calculateTimeFrame(local24StartTime, duration);
         if (Object.keys(responses).length && responses[`${date}T${startTime}.000Z`]) {
           for (const userUuid in responses[`${date}T${startTime}.000Z`]) {
             participants.push(responses[`${date}T${startTime}.000Z`][userUuid]);
           }
         }
-
-        newListItems.push({ date: dateObject.toLocaleDateString(), day: getDayOfTheWeek(dateObject), time: timeFrame, timestamp: `${date}T${startTime}.000Z`, participants });
+        newListItems.push({ date, day: getDayOfTheWeek(dateObject), time: timeFrame, timestamp: `${date}T${startTime}.000Z`, participants });
       });
     });
     setListItems(newListItems);

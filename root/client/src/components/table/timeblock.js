@@ -6,7 +6,6 @@ export const TimeBlock = ({ date, duration, startTime, classTopPosition, classHe
   const timezoneOffsetToHour = timezoneOffset / 60;
   const dateObject = new Date(`${date}T${startTime}:00.000${timezoneOffset > 0 ? '-' : '+'}${timezoneOffsetToHour < 10 ? `0${timezoneOffsetToHour}` : timezoneOffsetToHour}:00`);
   const local24StartTime = `${dateObject.getHours()}:${startTime.split(':')[1]}`;
-  console.log(calculateTimeFrame(local24StartTime, duration));
   return (
     <span className={`span-time-block ${classTopPosition} ${classHeight}`}>
       {calculateTimeFrame(local24StartTime, duration)}

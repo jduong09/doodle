@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { classTopPosition, getDbTime, createPossibleTimeBlock } from '../../util/tablehelpers';
+import { classTopPosition, getDbTimestamp, createPossibleTimeBlock } from '../../util/tablehelpers';
 import { TimeBlock } from './timeblock';
 
 export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pollAvailabilities, hour }) => {
@@ -12,7 +12,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
           const dateObject = new Date(`${chosenDate}T${time}.000Z`);
           const convertedLocalTime = dateObject.toTimeString().slice(0, 6);
           const arrTime = convertedLocalTime.split(':');
-          if (parseInt(arrTime[0]) === hour) {
+          if (parseInt(arrTime[0]) === hour && arrTime[1] === startTime.split(':')[1]) {
             setSelected(true);
           }
         });
@@ -24,7 +24,7 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
     e.preventDefault();
 
     if (e.target.children.length === 0) {
-      const possibleTimeBlock = createPossibleTimeBlock(startTime, duration);
+      const possibleTimeBlock = createPossibleTimeBlock(date, startTime, duration);
       e.target.appendChild(possibleTimeBlock);
     }
   }
@@ -41,18 +41,18 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
     e.preventDefault();
     e.stopPropagation();
     
-    const dbTime = getDbTime(date, startTime);
-   
+    const [dbDate, dbTime] = getDbTimestamp(date, startTime);
+
     const newPollAvail = {
       ...pollAvailabilities,
     };
 
-    if (!newPollAvail[date]) {
-      newPollAvail[date] = [dbTime];
+    if (!newPollAvail[dbDate]) {
+      newPollAvail[dbDate] = [dbTime];
       setSelected(true);
       setPollAvailabilities(newPollAvail);
-    } else if (!newPollAvail[date].includes(dbTime)) {
-      newPollAvail[date] = [...newPollAvail[date], dbTime];
+    } else if (!newPollAvail[dbDate].includes(dbTime)) {
+      newPollAvail[dbDate] = [...newPollAvail[dbDate], dbTime];
       setSelected(true);
       setPollAvailabilities(newPollAvail);
     }
@@ -61,19 +61,18 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Handle Delete: ', e.target);
 
     const newPollAvail = {
       ...pollAvailabilities,
     };
 
-    const dbTime = getDbTime(date, startTime);
-    const array = newPollAvail[date].filter((time) => time !== dbTime);
+    const [dbDate, dbTime] = getDbTimestamp(date, startTime);
+    const array = newPollAvail[dbDate].filter((time) => time !== dbTime);
 
     if (!array.length) {
-      delete newPollAvail[date];
+      delete newPollAvail[dbDate];
     } else {
-      newPollAvail[date] = array;
+      newPollAvail[dbDate] = array;
     }
     
     setSelected(false);

@@ -21,8 +21,6 @@ export const PollDetail = () => {
   }, []);
 
   const { name, description, duration, location, availabilities, responses } = pollData;
-  console.log('Duration', duration);
-  
   return (
     <div>
       <header>
