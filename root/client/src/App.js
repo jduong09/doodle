@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LandingPage } from './components/landingPage';
 import { NewPoll } from './components/user/newPoll';
 import { UpdatePoll } from './components/user/updatePoll';
-// import { Dashboard } from './components/user/dashboard';
 import { PollDetail } from './components/poll/pollDetail';
 import { PollDetailAdmin } from './components/poll/pollDetailAdmin';
 import { PollCheckout } from './components/poll/pollCheckout';

@@ -7,9 +7,7 @@ export const NewPoll = () => {
   const handleSubmit = async (e, formData, action, method) => {
     e.preventDefault();
     try {
-      const { pollUuid, response } = await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-      console.log(response);
-
+      const { pollUuid } = await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       window.location = `/polls/${pollUuid}/checkout`;
     } catch(err) {
       console.log(err);

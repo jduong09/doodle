@@ -33,7 +33,6 @@ export const PollDetailAdmin = () => {
     const data = response.json();
 
     if (response.ok) {
-      console.log(data);
       window.location = '/';
     } else {
       console.error(data);

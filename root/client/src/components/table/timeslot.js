@@ -57,7 +57,6 @@ export const TimeSlot = ({ week, date, startTime, duration, setPollAvailabilitie
       setSelected(true);
       setPollAvailabilities(newPollAvail);
     }
-    console.log(newPollAvail);
   }
 
   const handleDelete = (e) => {

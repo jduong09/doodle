@@ -10,9 +10,7 @@ export const UpdatePoll = () => {
 
   useEffect(() => {
     const getPollData = async () => await apiRequest(`/polls/${pollUuid}/pollInfo`, { method: 'GET' })
-      .then(({ pollData, response }) => {
-        console.log(response);
-        console.log(pollData);
+      .then(({ pollData }) => {
         setEditData(pollData);
       })
       .catch(err => {
@@ -25,8 +23,7 @@ export const UpdatePoll = () => {
   const handleSubmit = async (e, formData, action, method) => {
     e.preventDefault();
     try {
-      const { response } = await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-      console.log(response);
+      await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       setEditData(null);
 
       window.location = `/admin/${pollUuid}`;
@@ -34,8 +31,6 @@ export const UpdatePoll = () => {
       console.log(err);
     }
   }
-
-  console.log(editData);
 
   return (
     <div>

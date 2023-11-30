@@ -19,7 +19,6 @@ export const PollForm = ({ handleSubmit, editData }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log({ pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities });
     handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
     resetFormData();
   }
