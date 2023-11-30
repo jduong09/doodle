@@ -147,7 +147,7 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
   });
 
   return (
-    <div>
+    <div id="div-availabilities-table">
       <div id="table-btns">
         <ul>
           <li>

@@ -28,6 +28,8 @@ export const UpdatePoll = () => {
       const { response } = await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       console.log(response);
       setEditData(null);
+
+      window.location = `/admin/${pollUuid}`;
     } catch(err) {
       console.log(err);
     }

@@ -1,7 +1,21 @@
 import { React } from 'react';
 import { PollForm } from '../poll/pollForm';
+import { apiRequest } from '../../util/api';
+
 
 export const NewPoll = () => {
+  const handleSubmit = async (e, formData, action, method) => {
+    e.preventDefault();
+    try {
+      const { pollUuid, response } = await apiRequest(action, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
+      console.log(response);
+
+      window.location = `/polls/${pollUuid}/checkout`;
+    } catch(err) {
+      console.log(err);
+    }
+  }
+  
   return (
     <div>
       <header>
@@ -9,7 +23,9 @@ export const NewPoll = () => {
         <div>New Poll</div>
       </header>
       <main>
-        <PollForm />
+        <div id="div-form">
+          <PollForm handleSubmit={handleSubmit} />
+        </div>
       </main>
     </div>
   );

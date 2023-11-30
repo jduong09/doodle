@@ -35,7 +35,7 @@ router.route('/')
   
       const poll = new Poll(pollData);
       await poll.save();
-      res.status(200).json({ response: 'Successfully created poll.' });
+      res.status(200).json({ pollUuid: poll._id.toString(), response: 'Successfully created poll.' });
     } catch(err) {
       res.status(400).json({ response: 'Failure to create poll.' });
     }
