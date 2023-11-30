@@ -22,8 +22,8 @@ export const PollCheckout = () => {
     <div>
       {pollData &&
         <ul>
-          <li>Link for users to share: {`http://localhost:3000/polls/${pollData.id}`}</li>
-          <li>Link for you to edit poll: {`http://localhost:3000/admin/${pollData.id}`}</li>
+          <li>Link for users to share: <a href={`http://localhost:3000/polls/${pollData.id}`}>{`http://localhost:3000/polls/${pollData.id}`}</a></li>
+          <li>Link for you to edit poll: <a href={`http://localhost:3000/admin/${pollData.id}`}>{`http://localhost:3000/admin/${pollData.id}`}</a></li>
         </ul>
       }
     </div>

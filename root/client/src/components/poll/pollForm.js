@@ -2,7 +2,6 @@ import { React, useState } from 'react';
 import { Table } from '../table/table';
 
 export const PollForm = ({ handleSubmit, editData }) => {
-  console.log('Poll Form: ', editData);
   const [pollName, setPollName] = useState(editData ? editData.name : '');
   const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');

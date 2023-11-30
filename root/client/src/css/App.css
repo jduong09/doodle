@@ -59,10 +59,6 @@ form > label {
   text-align: center;
 }
 
-form > label:last-of-type > input {
-  display: none;
-}
-
 label > input {
   display: block;
   width: 75%;
@@ -114,8 +110,9 @@ th {
   margin: 1rem auto;
 }
 
-
-
+#inputAvailabilities {
+  display: none;
+}
 
 
 
