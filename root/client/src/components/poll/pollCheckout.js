@@ -1,9 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-
-// Display sharable email.
-// Display admin email.
 export const PollCheckout = () => {
   const { pollUuid } = useParams();
   const [pollData, setPollData] = useState(null);

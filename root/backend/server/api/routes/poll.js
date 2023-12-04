@@ -93,7 +93,7 @@ router.post('/:pollUuid/response', async (req, res, next) => {
 
     if (responsesData) {
       newResponseObj = {
-        ...responsesData,
+        responsesData,
       }
     }
 

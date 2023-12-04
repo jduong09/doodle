@@ -27,7 +27,7 @@ app.use(router);
 
 app.delete('/admin/:pollUuid', async (req, res, next) => {
   try {
-    await Poll.findByIdAndDelete({ _id: req.params.pollUuid }).then(data => data);
+    await Poll.findByIdAndDelete({ _id: req.params.pollUuid });
     res.status(200).json({ response: 'Successfully deleted poll data.' });
   } catch(err) {
     res.status(400).json({ response: 'Failure to delete poll.' });
