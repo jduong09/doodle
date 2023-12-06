@@ -1,8 +1,10 @@
 import { React, useState, useEffect } from 'react';
 import { Calendar } from './calendar.js';
+import { convertIntToMonth, findDayOfWeek, findDaysInMonth } from '../../util/tablehelpers.js';
 
 export const MonthlyTable = () => {
   const [month, setMonth] = useState(null);
+  const [year, setYear] = useState(null);
   const [firstDayOfMonth, setFirstDayOfMonth] = useState(null);
   const [daysInMonth, setDaysInMonth] = useState(null);
 
@@ -13,109 +15,84 @@ export const MonthlyTable = () => {
 
     const dayOfWeek = todaysDate.getDay();
     const dayOfMonth = todaysDate.getDate();
+    setYear(todaysDate.getFullYear());
 
     if (dayOfMonth < 7) {
-      // ex: day of Month = 5;
-      // day of Week = 2 (Tuesday)
-      // result: first day of month is Friday
-
       const numSinceFirst = dayOfMonth - 1;
-      // console.log('Days since first: ', numSinceFirst);
-
-      // console.log(numSinceFirst % 7);
 
       const numAdj = numSinceFirst > 7 ? numSinceFirst % 7 : 7 % numSinceFirst;
 
       const firstDayOfWeek = numAdj + dayOfWeek;
 
-      switch (firstDayOfWeek) {
-        case 0:
-          setFirstDayOfMonth('Sunday');
-          break;
-        case 1:
-          setFirstDayOfMonth('Monday');
-          break;
-        case 2:
-          setFirstDayOfMonth('Tuesday');
-          break;
-        case 3:
-          setFirstDayOfMonth('Wednesday');
-          break;
-        case 4:
-          setFirstDayOfMonth('Thursday');
-          break;
-        case 5:
-          setFirstDayOfMonth('Friday');
-          break;
-        case 6:
-          setFirstDayOfMonth('Saturday');
-          break;
-        default:
-          break;
-      }
+      setFirstDayOfMonth(findDayOfWeek(firstDayOfWeek))
     }
 
     const todaysMonth = todaysDate.getMonth();
-
-    switch (todaysMonth) {
-      case 0:
-        setMonth('January');
-        setDaysInMonth(31);
-        break;
-      case 1:
-        setMonth('February');
-        setDaysInMonth(28);
-        break;
-      case 2:
-        setMonth('March');
-        setDaysInMonth(31);
-        break;
-      case 3:
-        setMonth('April');
-        setDaysInMonth(30);
-        break;
-      case 4:
-        setMonth('May');
-        setDaysInMonth(31);
-        break;
-      case 5:
-        setMonth('June');
-        setDaysInMonth(30);
-        break;
-      case 6:
-        setMonth('July');
-        setDaysInMonth(31);
-        break;
-      case 7:
-        setMonth('August');
-        setDaysInMonth(31);
-        break;
-      case 8:
-        setMonth('September');
-        setDaysInMonth(30);
-        break;
-      case 9:
-        setMonth('October');
-        setDaysInMonth(31);
-        break;
-      case 10:
-        setMonth('November');
-        setDaysInMonth(30);
-        break;
-      case 11:
-        setMonth('December');
-        setDaysInMonth(31);
-        break;
-      default:
-        break;
-    }
+    setMonth(todaysDate.getMonth());
+    setDaysInMonth(findDaysInMonth(todaysMonth))
   }, []);
 
-  console.log(firstDayOfMonth);
+  // 
+  const handleNextMonth = (e) => {
+    e.preventDefault();
+
+    if (month === 11) {
+      setMonth(0);
+      const newYr = year + 1;
+      setDaysInMonth(findDaysInMonth(0, newYr));
+      setYear(newYr);
+      
+      const dateObjectFOM = new Date(newYr, 0, 1);
+
+      setFirstDayOfMonth(findDayOfWeek(dateObjectFOM.getDay()));
+    } else {
+      const newMth = month + 1;
+      setMonth(newMth);
+      setDaysInMonth(findDaysInMonth(newMth, year));
+
+      const dateObjectFOM = new Date(year, newMth, 1);
+
+      setFirstDayOfMonth(findDayOfWeek(dateObjectFOM.getDay()));
+    }
+  };
+
+  const handlePrevMonth = (e) => {
+    e.preventDefault();
+
+    if (month === 0) {
+      setMonth(11);
+      const newYr = year - 1;
+      setDaysInMonth(findDaysInMonth(11, newYr));
+      setYear(newYr);
+      
+      const dateObjectFOM = new Date(newYr, 11, 1);
+
+      setFirstDayOfMonth(findDayOfWeek(dateObjectFOM.getDay()));
+    } else {
+      const newMth = month - 1;
+      setMonth(newMth);
+      setDaysInMonth(findDaysInMonth(newMth, year));
+
+      const dateObjectFOM = new Date(year, newMth, 1);
+
+      setFirstDayOfMonth(findDayOfWeek(dateObjectFOM.getDay()));
+    }
+  }
 
   return (
-    <div>
-      <h2>{month}</h2>
+    <div id='div-monthlyTable'>
+      <div id='monthlyTable-header'>
+        <h2>{convertIntToMonth(month)} {year}</h2>
+        <div>
+          <button id='btn-prev-month' onClick={handlePrevMonth}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+          </button>
+          <button id='btn-next-month' onClick={handleNextMonth}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+          </button>
+        </div>
+      </div>
+
       <Calendar month={month} firstDayOfMonth={firstDayOfMonth} daysInMonth={daysInMonth} />
     </div>
   );

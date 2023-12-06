@@ -64,6 +64,12 @@ button:hover {
   margin-bottom: 0;
 }
 
+#div-monthlyTable > h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 #div-calendar {
   border: 1px solid black;
   width: fit-content;
@@ -74,8 +80,17 @@ button:hover {
 }
 
 .week > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   padding: .5rem;
   border: 1px solid black;
-  width: 32px;
-  height: 32px;
 }
+
+.week > li > h2 {
+  font-weight: 700;
+}
+

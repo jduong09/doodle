@@ -2,9 +2,6 @@ import { React, useEffect } from 'react';
 import { Week } from './week.js';
 
 export const Calendar = ({ month, firstDayOfMonth, daysInMonth }) => {
-  console.log(firstDayOfMonth);
-
-
   const arrCalendar = [["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""]];
 
   let row = 0;
@@ -35,7 +32,6 @@ export const Calendar = ({ month, firstDayOfMonth, daysInMonth }) => {
     default:
       break;
   }
-  console.log(col);
 
   for (let i = 0; i < daysInMonth; i++) {
     arrCalendar[row][col] = i + 1;
@@ -49,7 +45,7 @@ export const Calendar = ({ month, firstDayOfMonth, daysInMonth }) => {
   }
 
   const weeks = arrCalendar.map((week, idx) => {
-    return <Week week={week} key={idx} />
+    return <Week month={month} week={week} key={idx} />
   });
 
   return <div id="div-calendar">{weeks}</div>
