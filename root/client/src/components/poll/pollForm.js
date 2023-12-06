@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { Table } from '../table/table';
+import { MonthlyTable } from '../monthlyTable/monthlyTable';
 
 export const PollForm = ({ handleSubmit, editData }) => {
   const [pollName, setPollName] = useState(editData ? editData.name : '');
@@ -45,8 +46,12 @@ export const PollForm = ({ handleSubmit, editData }) => {
       <label htmlFor='inputAvailabilities'>Availabilities
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
       </label>
-      <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
       <button type='submit'>{editData ? 'Update' : 'Create'}</button>
+
+
+      <MonthlyTable />
     </form>
   );
 };
+
+// <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />

@@ -63,3 +63,19 @@ button:hover {
 #list-polls > li > button:last-child {
   margin-bottom: 0;
 }
+
+#div-calendar {
+  border: 1px solid black;
+  width: fit-content;
+}
+
+.week {
+  display: flex;
+}
+
+.week > li {
+  padding: .5rem;
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+}
