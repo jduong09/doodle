@@ -7,6 +7,7 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
   const [year, setYear] = useState(null);
   const [firstDayOfMonth, setFirstDayOfMonth] = useState(null);
   const [daysInMonth, setDaysInMonth] = useState(null);
+  console.log(pollAvailabilities);
 
   useEffect(() => {
     const todaysDate = new Date(Date.now());
@@ -111,7 +112,7 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
         </div>
       </div>
 
-      <Calendar year={year} month={month} firstDayOfMonth={firstDayOfMonth} daysInMonth={daysInMonth} handleDayClick={handleDayClick} />
+      <Calendar pollAvailabilities={pollAvailabilities} year={year} month={month} firstDayOfMonth={firstDayOfMonth} daysInMonth={daysInMonth} handleDayClick={handleDayClick} />
     </div>
   );
 };

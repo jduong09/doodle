@@ -22,7 +22,6 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
 
   const handleMouseenter = (e) => {
     e.preventDefault();
-    console.log(e.target.children.length);
 
     if (e.target.children.length === 0) {
       const possibleTimeBlock = createPossibleTimeBlock(startTime, duration);

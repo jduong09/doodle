@@ -1,7 +1,7 @@
 import { React } from 'react';
 import { Week } from './week.js';
 
-export const Calendar = ({ year, month, firstDayOfMonth, daysInMonth, handleDayClick }) => {
+export const Calendar = ({ pollAvailabilities, year, month, firstDayOfMonth, daysInMonth, handleDayClick }) => {
   const arrCalendar = [["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""]];
 
   let row = 0;
@@ -45,7 +45,7 @@ export const Calendar = ({ year, month, firstDayOfMonth, daysInMonth, handleDayC
   }
 
   const weeks = arrCalendar.map((week, idx) => {
-    return <Week year={year} month={month} week={week} key={idx} handleDayClick={handleDayClick} />
+    return <Week pollAvailabilities={pollAvailabilities} year={year} month={month} week={week} key={idx} handleDayClick={handleDayClick} />
   });
 
   return <div id="div-calendar">{weeks}</div>

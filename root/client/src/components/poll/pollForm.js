@@ -6,9 +6,10 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollName, setPollName] = useState(editData ? editData.name : '');
   const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
-  const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) / 60 : '15');
+  const [pollDuration, setPollDuration] = useState(editData ? editData.duration : '15');
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
-  const [toggleDays, setToggleDays] = useState(false);
+  const [toggleDays, setToggleDays] = useState(editData && editData.duration === 1440 ? true : false);
+  console.log(pollDuration);
 
   const resetFormData = () => {
     setPollName('');
@@ -67,8 +68,8 @@ export const PollForm = ({ handleSubmit, editData }) => {
       <div id='div-calendars'>
         <ul>
           <li>
-            <button id='btn-toggle-times' onClick={handleTimesToggle} >Times</button>
-            <button id='btn-toggle-days' onClick={handleDaysToggle} >Days</button>
+            <button id='btn-toggle-times' className={!toggleDays ? 'selected' : ''} onClick={handleTimesToggle}>Times</button>
+            <button id='btn-toggle-days' className={toggleDays ? 'selected' : ''} onClick={handleDaysToggle}>Days</button>
           </li>
         </ul>
         {toggleDays

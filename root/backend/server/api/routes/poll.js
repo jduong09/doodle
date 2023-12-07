@@ -69,7 +69,7 @@ router.get('/:pollId/pollInfo', async (req, res) => {
           description: data.description,
           availabilities: data.availabilities,
           location: data.location,
-          duration: data.duration
+          duration: parseInt(data.duration) / 60
         };
       });
     res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
