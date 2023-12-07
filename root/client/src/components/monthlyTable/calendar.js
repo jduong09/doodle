@@ -1,7 +1,7 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import { Week } from './week.js';
 
-export const Calendar = ({ month, firstDayOfMonth, daysInMonth }) => {
+export const Calendar = ({ year, month, firstDayOfMonth, daysInMonth, handleDayClick }) => {
   const arrCalendar = [["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""]];
 
   let row = 0;
@@ -45,7 +45,7 @@ export const Calendar = ({ month, firstDayOfMonth, daysInMonth }) => {
   }
 
   const weeks = arrCalendar.map((week, idx) => {
-    return <Week month={month} week={week} key={idx} />
+    return <Week year={year} month={month} week={week} key={idx} handleDayClick={handleDayClick} />
   });
 
   return <div id="div-calendar">{weeks}</div>

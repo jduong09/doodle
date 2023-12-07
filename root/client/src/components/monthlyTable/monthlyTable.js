@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Calendar } from './calendar.js';
 import { convertIntToMonth, findDayOfWeek, findDaysInMonth } from '../../util/tablehelpers.js';
 
-export const MonthlyTable = () => {
+export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
   const [firstDayOfMonth, setFirstDayOfMonth] = useState(null);
@@ -17,15 +17,13 @@ export const MonthlyTable = () => {
     const dayOfMonth = todaysDate.getDate();
     setYear(todaysDate.getFullYear());
 
-    if (dayOfMonth < 7) {
-      const numSinceFirst = dayOfMonth - 1;
+    const numSinceFirst = dayOfMonth - 1;
 
-      const numAdj = numSinceFirst > 7 ? numSinceFirst % 7 : 7 % numSinceFirst;
+    const numAdj = numSinceFirst > 7 ? numSinceFirst % 7 : 7 % numSinceFirst;
 
-      const firstDayOfWeek = numAdj + dayOfWeek;
+    const firstDayOfWeek = numAdj + dayOfWeek;
 
-      setFirstDayOfMonth(findDayOfWeek(firstDayOfWeek))
-    }
+    setFirstDayOfMonth(findDayOfWeek(firstDayOfWeek))
 
     const todaysMonth = todaysDate.getMonth();
     setMonth(todaysDate.getMonth());
@@ -79,6 +77,26 @@ export const MonthlyTable = () => {
     }
   }
 
+  const handleDayClick = (year, month, day, e) => {
+    e.preventDefault();
+
+    const dateObject = new Date(year, month, day);
+    const dateToIso = dateObject.toISOString().slice(0, 10);
+
+    const newPollAvail = {
+      ...pollAvailabilities
+    };
+
+    // Deselect
+    if (!newPollAvail[dateToIso]) {
+      newPollAvail[dateToIso] = ['allDay'];
+    } else {
+      delete newPollAvail[dateToIso];
+    }
+
+    setPollAvailabilities(newPollAvail);
+  }
+
   return (
     <div id='div-monthlyTable'>
       <div id='monthlyTable-header'>
@@ -93,7 +111,7 @@ export const MonthlyTable = () => {
         </div>
       </div>
 
-      <Calendar month={month} firstDayOfMonth={firstDayOfMonth} daysInMonth={daysInMonth} />
+      <Calendar year={year} month={month} firstDayOfMonth={firstDayOfMonth} daysInMonth={daysInMonth} handleDayClick={handleDayClick} />
     </div>
   );
 };

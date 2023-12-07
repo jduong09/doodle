@@ -8,6 +8,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
   const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) / 60 : '15');
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
+  const [toggleDays, setToggleDays] = useState(false);
 
   const resetFormData = () => {
     setPollName('');
@@ -23,7 +24,23 @@ export const PollForm = ({ handleSubmit, editData }) => {
     handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
     resetFormData();
   }
-  
+
+  const handleTimesToggle = (e) => {
+    e.preventDefault();
+
+    setToggleDays(false);
+    setPollDuration('15');
+    setPollAvailabilities({});
+  }
+
+  const handleDaysToggle = (e) => {
+    e.preventDefault();
+
+    setToggleDays(true);
+    setPollDuration('1440');
+    setPollAvailabilities({});
+  }
+
   return (
     <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
       <label htmlFor='inputName'>Name:
@@ -35,23 +52,30 @@ export const PollForm = ({ handleSubmit, editData }) => {
       <label htmlFor='inputLocation'>Location (optional):
         <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
       </label>
-      <label htmlFor='pollDuration'>Duration:
+      {!toggleDays
+      && <label htmlFor='pollDuration'>Duration:
         <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(parseInt(e.target.value))}>
           <option value='15'>15 mins</option>
           <option value='30'>30 mins</option>
           <option value='60'>1 hour</option>
           <option value='120'>2 hours</option>
         </select>
-      </label>
+      </label>}
       <label htmlFor='inputAvailabilities'>Availabilities
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
       </label>
+      <div id='div-calendars'>
+        <ul>
+          <li>
+            <button id='btn-toggle-times' onClick={handleTimesToggle} >Times</button>
+            <button id='btn-toggle-days' onClick={handleDaysToggle} >Days</button>
+          </li>
+        </ul>
+        {toggleDays
+          ? <MonthlyTable setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
+          : <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />}
+      </div>
       <button type='submit'>{editData ? 'Update' : 'Create'}</button>
-
-
-      <MonthlyTable />
     </form>
   );
 };
-
-// <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
