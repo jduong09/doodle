@@ -61,7 +61,6 @@ export const TimeSlot = ({ date, startTime, duration, setPollAvailabilities, pol
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Handle Delete: ', e.target);
 
     const newPollAvail = {
       ...pollAvailabilities,

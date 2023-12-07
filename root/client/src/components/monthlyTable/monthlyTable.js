@@ -7,13 +7,9 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
   const [year, setYear] = useState(null);
   const [firstDayOfMonth, setFirstDayOfMonth] = useState(null);
   const [daysInMonth, setDaysInMonth] = useState(null);
-  console.log(pollAvailabilities);
 
   useEffect(() => {
     const todaysDate = new Date(Date.now());
-
-    // Get which month it is.
-
     const dayOfWeek = todaysDate.getDay();
     const dayOfMonth = todaysDate.getDate();
     setYear(todaysDate.getFullYear());
@@ -31,7 +27,6 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
     setDaysInMonth(findDaysInMonth(todaysMonth))
   }, []);
 
-  // 
   const handleNextMonth = (e) => {
     e.preventDefault();
 
@@ -40,17 +35,13 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
       const newYr = year + 1;
       setDaysInMonth(findDaysInMonth(0, newYr));
       setYear(newYr);
-      
       const dateObjectFOM = new Date(newYr, 0, 1);
-
       setFirstDayOfMonth(findDayOfWeek(dateObjectFOM.getDay()));
     } else {
       const newMth = month + 1;
       setMonth(newMth);
       setDaysInMonth(findDaysInMonth(newMth, year));
-
       const dateObjectFOM = new Date(year, newMth, 1);
-
       setFirstDayOfMonth(findDayOfWeek(dateObjectFOM.getDay()));
     }
   };
@@ -88,7 +79,6 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
       ...pollAvailabilities
     };
 
-    // Deselect
     if (!newPollAvail[dateToIso]) {
       newPollAvail[dateToIso] = ['allDay'];
     } else {
@@ -111,7 +101,6 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
           </button>
         </div>
       </div>
-
       <Calendar pollAvailabilities={pollAvailabilities} year={year} month={month} firstDayOfMonth={firstDayOfMonth} daysInMonth={daysInMonth} handleDayClick={handleDayClick} />
     </div>
   );

@@ -9,7 +9,6 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollDuration, setPollDuration] = useState(editData ? editData.duration : '15');
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
   const [toggleDays, setToggleDays] = useState(editData && editData.duration === 1440 ? true : false);
-  console.log(pollDuration);
 
   const resetFormData = () => {
     setPollName('');
