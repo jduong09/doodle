@@ -139,13 +139,17 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
 
   const tHeadRow = Object.keys(week).map((weekDay, idx) => {
     return (
-      <th key={idx}>{`${weekDay} ${new Date (week[weekDay]).getUTCDate()}`}</th>
+      <th key={idx}>
+        <h3>{weekDay.slice(0, 3)}</h3>
+        <h2>{new Date (week[weekDay]).getUTCDate()}</h2>
+      </th>
     );
   });
 
   return (
     <div>
-      <div id="table-btns">
+      <div id="table-header">
+        <div id="week-current">{`${new Date(week['Sunday']).toDateString()} - ${new Date(week['Saturday']).toDateString()}`}</div>
         <ul>
           <li>
             <button id="btn-prev-week" onClick={handlePrevWeek}>
@@ -158,12 +162,11 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
             </button>
           </li>
         </ul>
-        <div id="week-current">{`${new Date(week['Sunday']).toDateString()} - ${new Date(week['Saturday']).toDateString()}`}</div>
       </div>
       <table>
         <thead>
           <tr>
-            <th>Times</th>
+            <th></th>
             {tHeadRow}
           </tr>
         </thead>

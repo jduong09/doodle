@@ -45,10 +45,9 @@ export const createPossibleTimeBlock = (startTime, duration) => {
   const [hour, minutes] = startTime.split(':');
   const twelveHourStartTime = `${hour < 12  ? `${hour === '00' ? 12 : hour}:${minutes}` : `${hour - 12 === 0 ? 12 : hour - 12}:${minutes}`}`;
   const timeframe = calculateTimeFrame(twelveHourStartTime, duration);
-  console.log(timeframe);
   const position = classTopPosition(minutes);
 
-  span.innerHTML = timeframe;
+  span.innerHTML = startTime;
   span.classList.add('temp-timeblock', position, `h-${duration}`);
   return span;
 }
