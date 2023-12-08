@@ -4,7 +4,6 @@ html {
 
 table {
   display: block;
-  width: fit-content;
   border-collapse: separate;
   border: 1px solid black;
   letter-spacing: 1px;
