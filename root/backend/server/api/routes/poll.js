@@ -1,6 +1,6 @@
 const express = require('express');
 const Poll = require('../../../db/models/poll');
-
+const crypto = require('crypto');
 const router = express.Router();
 
 router.route('/')
@@ -29,12 +29,13 @@ router.route('/')
         description: pollDescription,
         location: pollLocation,
         duration: parseInt(pollDuration) * 60,
-        availabilities: pollAvailabilities
+        availabilities: pollAvailabilities,
+        responses: {}
       }
   
       const poll = new Poll(pollData);
       await poll.save();
-      res.status(200).json({ response: 'Successfully created poll.' });
+      res.status(200).json({ pollUuid: poll._id.toString(), response: 'Successfully created poll.' });
     } catch(err) {
       res.status(400).json({ response: 'Failure to create poll.' });
     }
@@ -69,12 +70,46 @@ router.get('/:pollId/pollInfo', async (req, res) => {
           description: data.description,
           availabilities: data.availabilities,
           location: data.location,
-          duration: parseInt(data.duration) / 60
+          duration: parseInt(data.duration) / 60,
+          responses: data.responses
         };
       });
     res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
   } catch(err) {
     res.status(400).json({ response: 'Failure to get poll data.' });
+  }
+});
+
+router.post('/:pollUuid/response', async (req, res, next) => {
+  const { name, choices } = req.body;
+  const userUuid = crypto.randomBytes(24).toString('hex');
+
+  try {
+    const responsesData = await Poll.findById(req.params.pollUuid).then(data => {
+      return data.responses;
+    });
+  
+    let newResponseObj = {};
+
+    if (responsesData) {
+      newResponseObj = {
+        ...responsesData,
+      }
+    }
+
+    choices.forEach((timestamp) => {
+      if (newResponseObj[timestamp]) {
+        newResponseObj[timestamp][userUuid] = name;
+      } else {
+        newResponseObj[timestamp] = {
+          [userUuid]: name
+        }
+      }
+    });  
+    const response = await Poll.findOneAndUpdate({ _id: req.params.pollUuid }, { responses: newResponseObj });
+    res.status(200).json({ response: 'Successfully added response.', data: response });
+  } catch(err) {
+    res.status(400).json({ response: 'Failure to create response.' });
   }
 });
 
