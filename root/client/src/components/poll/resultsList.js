@@ -8,11 +8,16 @@ export const ResultsList = ({ availabilities, responses, duration }) => {
     Object.keys(availabilities).forEach((date) => {
       availabilities[date].forEach((startTime) => {
         const participants = [];
-        const dateObject = new Date(`${date}T${startTime}.000Z`);
-        const local24StartTime = `${dateObject.getHours()}:${startTime.split(':')[1]}`;
-
+        const dateObject = duration === 1440 ? new Date(`${date}T00:00:00.000Z`) : new Date(`${date}T${startTime}.000Z`);
         
-        const timeFrame = calculateTimeFrame(local24StartTime, duration);
+        let timeFrame;
+        if (duration === 1440) {
+          timeFrame = 'All Day';
+        } else {
+          timeFrame = calculateTimeFrame(local24StartTime, duration);
+          const local24StartTime = `${dateObject.getHours()}:${startTime.split(':')[1]}`;
+        }
+        
         if (Object.keys(responses).length && responses[`${date}T${startTime}.000Z`]) {
           for (const userUuid in responses[`${date}T${startTime}.000Z`]) {
             participants.push(responses[`${date}T${startTime}.000Z`][userUuid]);

@@ -2,8 +2,7 @@ import { React } from 'react';
 import { Week } from './week.js';
 
 export const Calendar = ({ pollAvailabilities, year, month, firstDayOfMonth, daysInMonth, handleDayClick }) => {
-  const arrCalendar = [["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""], ["", "", "", "", "", "", ""]];
-
+  const arrCalendar = [...Array(6)].map(() => Array(7).fill(""));       
   let row = 0;
   let col;
 

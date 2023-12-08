@@ -114,9 +114,6 @@ th {
   display: none;
 }
 
-
-
-
 #list-polls > li > h3 {
   font-size: 1.25rem;
 }
@@ -174,4 +171,8 @@ th {
 /* Testing CSS */
 #btn-toggle-times.selected, #btn-toggle-days.selected {
   margin: 3rem 0;
+}
+
+#btn-form-submit {
+  display: block;
 }
