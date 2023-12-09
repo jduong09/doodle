@@ -3,6 +3,7 @@ import './css/App.css';
 import { React } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LandingPage } from './components/landingPage';
+import { Dashboard } from './components/user/dashboard';
 import { NewPoll } from './components/user/newPoll';
 import { UpdatePoll } from './components/user/updatePoll';
 import { PollDetail } from './components/poll/pollDetail';
@@ -14,7 +15,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<LandingPage />} />
+          <Route path='/' element={<Dashboard />} />
           <Route path='/polls/new' element={<NewPoll />} />
           <Route path='/polls/:pollUuid' element={<PollDetail />} />
           <Route path='/polls/:pollUuid/update' element={<UpdatePoll />} />
