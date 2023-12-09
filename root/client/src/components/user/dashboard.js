@@ -49,16 +49,31 @@ export const Dashboard = () => {
       getPolls();
   }, [showPollForm]);
 
+  const handleSubmitResponse = (e) => {
+    e.preventDefault();
+
+    const pollId = e.target.parentElement.getAttribute('data-poll-id');
+
+    window.location = `/polls/${pollId}`;
+  }
+
+  const handleAdminPage = (e) => {
+    e.preventDefault();
+
+    const pollId = e.target.parentElement.getAttribute('data-poll-id');
+    window.location = `/admin/${pollId}`;
+  }
+
   const arrPolls = polls.map((poll, idx) => {
     return (
       <li key={idx} data-poll-id={poll.id}>
         <h3>{poll.title}</h3>
         <div>{poll.location}</div>
         <button onClick={(e) => handleEdit(poll.id, e)}>Edit</button>
-        <button>Delete</button>
-        <button>See Results?</button>
+        <button onClick={handleSubmitResponse}>Submit Response</button>
+        <button onClick={handleAdminPage}>Admin</button>
       </li>
-    )
+    );
   });
 
   return (

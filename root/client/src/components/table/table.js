@@ -1,109 +1,112 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import '../../css/table.css';
 import { TableRow } from './tableRow';
 
 export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) => {
-  const [today] = useState(new Date());
   const [week, setWeek] = useState({});
+  const mounted = useRef(false);
 
   useEffect(() => {
-    const utcDayOfWeek = today.getUTCDay();
-    let newStateWeek;
-    switch(utcDayOfWeek) {
-      case 0:
-        newStateWeek = {
-          'Sunday': today[Symbol.toPrimitive]('number'),
-          'Monday': new Date().setDate(new Date().getDate() + 1),
-          'Tuesday': new Date().setDate(new Date().getDate() + 2),
-          'Wednesday': new Date().setDate(new Date().getDate() + 3),
-          'Thursday': new Date().setDate(new Date().getDate() + 4),
-          'Friday': new Date().setDate(new Date().getDate() + 5),
-          'Saturday': new Date().setDate(new Date().getDate() + 6),
+    if (!mounted.current) {
+      const today = new Date();
+      const utcDayOfWeek = today.getUTCDay();
+      let newStateWeek;
+      switch(utcDayOfWeek) {
+        case 0:
+          newStateWeek = {
+            'Sunday': today[Symbol.toPrimitive]('number'),
+            'Monday': new Date().setDate(new Date().getDate() + 1),
+            'Tuesday': new Date().setDate(new Date().getDate() + 2),
+            'Wednesday': new Date().setDate(new Date().getDate() + 3),
+            'Thursday': new Date().setDate(new Date().getDate() + 4),
+            'Friday': new Date().setDate(new Date().getDate() + 5),
+            'Saturday': new Date().setDate(new Date().getDate() + 6),
+          }
+          break;
+        case 1:
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 1),
+            'Monday': today[Symbol.toPrimitive]('number'),
+            'Tuesday': new Date().setDate(new Date().getDate() + 1),
+            'Wednesday': new Date().setDate(new Date().getDate() + 2),
+            'Thursday': new Date().setDate(new Date().getDate() + 3),
+            'Friday': new Date().setDate(new Date().getDate() + 4),
+            'Saturday': new Date().setDate(new Date().getDate() + 5),
+          }
+          break;
+        case 2:
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 2),
+            'Monday': new Date().setDate(new Date().getDate() - 1),
+            'Tuesday': today[Symbol.toPrimitive]('number'),
+            'Wednesday': new Date().setDate(new Date().getDate() + 1),
+            'Thursday': new Date().setDate(new Date().getDate() + 2),
+            'Friday': new Date().setDate(new Date().getDate() + 3),
+            'Saturday': new Date().setDate(new Date().getDate() + 4),
+          }
+          break;
+        case 3:
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 3),
+            'Monday': new Date().setDate(new Date().getDate() - 2),
+            'Tuesday': new Date().setDate(new Date().getDate() - 1),
+            'Wednesday': today[Symbol.toPrimitive]('number'),
+            'Thursday': new Date().setDate(new Date().getDate() + 1),
+            'Friday': new Date().setDate(new Date().getDate() + 2),
+            'Saturday': new Date().setDate(new Date().getDate() + 3),
+          }
+          break;
+        case 4:
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 4),
+            'Monday': new Date().setDate(new Date().getDate() - 3),
+            'Tuesday': new Date().setDate(new Date().getDate() - 2),
+            'Wednesday': new Date().setDate(new Date().getDate() - 1),
+            'Thursday': today[Symbol.toPrimitive]('number'),
+            'Friday': new Date().setDate(new Date().getDate() + 1),
+            'Saturday': new Date().setDate(new Date().getDate() + 2),
+          }
+          break;
+        case 5:
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 5),
+            'Monday': new Date().setDate(new Date().getDate() - 4),
+            'Tuesday': new Date().setDate(new Date().getDate() - 3),
+            'Wednesday': new Date().setDate(new Date().getDate() - 2),
+            'Thursday': new Date().setDate(new Date().getDate() -1),
+            'Friday': today[Symbol.toPrimitive]('number'),
+            'Saturday': new Date().setDate(new Date().getDate() + 1),
+          }
+          break;
+        case 6:
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 6),
+            'Monday': new Date().setDate(new Date().getDate() - 5),
+            'Tuesday': new Date().setDate(new Date().getDate() - 4),
+            'Wednesday': new Date().setDate(new Date().getDate() - 3),
+            'Thursday': new Date().setDate(new Date().getDate() - 2),
+            'Friday': new Date().setDate(new Date().getDate() - 1),
+            'Saturday': today[Symbol.toPrimitive]('number'),
+          }
+          break;
+        // Need to change default
+        default: {
+          newStateWeek = {
+            'Sunday': new Date().setDate(new Date().getDate() - 1),
+            'Monday': today[Symbol.toPrimitive]('number'),
+            'Tuesday': new Date().setDate(new Date().getDate() + 1),
+            'Wednesday': new Date().setDate(new Date().getDate() + 2),
+            'Thursday': new Date().setDate(new Date().getDate() + 3),
+            'Friday': new Date().setDate(new Date().getDate() + 4),
+            'Saturday': new Date().setDate(new Date().getDate() + 5),
+          }
+          break;
         }
-        break;
-      case 1:
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 1),
-          'Monday': today[Symbol.toPrimitive]('number'),
-          'Tuesday': new Date().setDate(new Date().getDate() + 1),
-          'Wednesday': new Date().setDate(new Date().getDate() + 2),
-          'Thursday': new Date().setDate(new Date().getDate() + 3),
-          'Friday': new Date().setDate(new Date().getDate() + 4),
-          'Saturday': new Date().setDate(new Date().getDate() + 5),
-        }
-        break;
-      case 2:
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 2),
-          'Monday': new Date().setDate(new Date().getDate() - 1),
-          'Tuesday': today[Symbol.toPrimitive]('number'),
-          'Wednesday': new Date().setDate(new Date().getDate() + 1),
-          'Thursday': new Date().setDate(new Date().getDate() + 2),
-          'Friday': new Date().setDate(new Date().getDate() + 3),
-          'Saturday': new Date().setDate(new Date().getDate() + 4),
-        }
-        break;
-      case 3:
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 3),
-          'Monday': new Date().setDate(new Date().getDate() - 2),
-          'Tuesday': new Date().setDate(new Date().getDate() - 1),
-          'Wednesday': today[Symbol.toPrimitive]('number'),
-          'Thursday': new Date().setDate(new Date().getDate() + 1),
-          'Friday': new Date().setDate(new Date().getDate() + 2),
-          'Saturday': new Date().setDate(new Date().getDate() + 3),
-        }
-        break;
-      case 4:
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 4),
-          'Monday': new Date().setDate(new Date().getDate() - 3),
-          'Tuesday': new Date().setDate(new Date().getDate() - 2),
-          'Wednesday': new Date().setDate(new Date().getDate() - 1),
-          'Thursday': today[Symbol.toPrimitive]('number'),
-          'Friday': new Date().setDate(new Date().getDate() + 1),
-          'Saturday': new Date().setDate(new Date().getDate() + 2),
-        }
-        break;
-      case 5:
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 5),
-          'Monday': new Date().setDate(new Date().getDate() - 4),
-          'Tuesday': new Date().setDate(new Date().getDate() - 3),
-          'Wednesday': new Date().setDate(new Date().getDate() - 2),
-          'Thursday': new Date().setDate(new Date().getDate() -1),
-          'Friday': today[Symbol.toPrimitive]('number'),
-          'Saturday': new Date().setDate(new Date().getDate() + 1),
-        }
-        break;
-      case 6:
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 6),
-          'Monday': new Date().setDate(new Date().getDate() - 5),
-          'Tuesday': new Date().setDate(new Date().getDate() - 4),
-          'Wednesday': new Date().setDate(new Date().getDate() - 3),
-          'Thursday': new Date().setDate(new Date().getDate() - 2),
-          'Friday': new Date().setDate(new Date().getDate() - 1),
-          'Saturday': today[Symbol.toPrimitive]('number'),
-        }
-        break;
-      // Need to change default
-      default: {
-        newStateWeek = {
-          'Sunday': new Date().setDate(new Date().getDate() - 1),
-          'Monday': today[Symbol.toPrimitive]('number'),
-          'Tuesday': new Date().setDate(new Date().getDate() + 1),
-          'Wednesday': new Date().setDate(new Date().getDate() + 2),
-          'Thursday': new Date().setDate(new Date().getDate() + 3),
-          'Friday': new Date().setDate(new Date().getDate() + 4),
-          'Saturday': new Date().setDate(new Date().getDate() + 5),
-        }
-        break;
       }
+      setWeek(newStateWeek);
+      mounted.current = true;
     }
-
-    setWeek(newStateWeek);
-  }, []);
+  }, [week]);
 
   const handlePrevWeek = (e) => {
     e.preventDefault();
@@ -147,9 +150,9 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
   });
 
   return (
-    <div>
-      <div id="table-header">
-        <div id="week-current">{`${new Date(week['Sunday']).toDateString()} - ${new Date(week['Saturday']).toDateString()}`}</div>
+    <div id="div-availabilities-table">
+      <div id="week-current">{`${new Date(week['Sunday']).toDateString()} - ${new Date(week['Saturday']).toDateString()}`}</div>
+      <div id="table-btns">
         <ul>
           <li>
             <button id="btn-prev-week" onClick={handlePrevWeek}>

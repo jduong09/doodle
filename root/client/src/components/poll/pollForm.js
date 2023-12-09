@@ -5,7 +5,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollName, setPollName] = useState(editData ? editData.name : '');
   const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
-  const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) / 60 : '15');
+  const [pollDuration, setPollDuration] = useState(editData ? parseInt(editData.duration) : '15');
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
 
   const resetFormData = () => {
@@ -13,25 +13,24 @@ export const PollForm = ({ handleSubmit, editData }) => {
     setPollDescription('');
     setPollLocation('');
     setPollDuration('15');
-    setPollAvailabilities({})
+    setPollAvailabilities({});
   }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
     resetFormData();
   }
   
   return (
     <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
-      <label htmlFor='inputName'>Name:
+      <label htmlFor='inputName'>Name
         <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
       </label>
-      <label htmlFor='inputDescription'>Description (optional):
+      <label htmlFor='inputDescription'>Description
         <input id='inputDescription' name='pollDescription' type='text' onChange={e => setPollDescription(e.target.value)} placeholder='Meeting, Conference, Birthday Party...' value={pollDescription} />
       </label>
-      <label htmlFor='inputLocation'>Location (optional):
+      <label htmlFor='inputLocation'>Location
         <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
       </label>
       <label htmlFor='pollDuration'>Duration:
@@ -46,7 +45,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
       </label>
       <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
-      <button type='submit'>{editData ? 'Update' : 'Create'}</button>
+      <button type='submit' id="btn-form-submit">{editData ? 'Update' : 'Create'}</button>
     </form>
   );
 };
