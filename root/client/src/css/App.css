@@ -22,8 +22,10 @@ h1, h2, h3 {
 
 h1 {
   font-size: 2rem;
-  text-align: center;
-  color: #F089CF;
+}
+
+header > h2 {
+  font-size: 1.5rem;
 }
 
 main {
@@ -142,9 +144,8 @@ th {
   margin-bottom: 1rem;
 }
 
-#div-calendar {
-  border: 1px solid black;
-  width: fit-content;
+#div-calendars {
+  width: 100%;
 }
 
 .week {
@@ -160,14 +161,19 @@ th {
   height: 48px;
   padding: .5rem;
   border: 1px solid black;
+  cursor: pointer;
+}
+
+.monthlyCalendar-day.disabled {
+  pointer-events: none;
 }
 
 .monthlyCalendar-day.selected, #btn-toggle-times.selected, #btn-toggle-days.selected {
-  background-color: #fa8072;
+  background-color: #89CFF0;
 }
 
 .monthlyCalendar-day:hover, #btn-toggle-times:hover, #btn-toggle-days:hover {
-  background-color: #F85441;
+  background-color: #5CBDEA;
 }
 
 .monthlyCalendar-day.selected:hover, #btn-toggle-times.selected:hover, #btn-toggle-days.selected:hover {
@@ -191,19 +197,17 @@ th {
   width: 50%;
   font-size: 1.5rem;
   font-weight: 600;
-  text-align: center;
 }
 
 #list-durations {
   display: flex;
-  width: 75%;
   margin: 1rem auto;
 }
 
 
 .list-item-duration {
   padding: .5rem;
-  margin: 1rem 1rem 0 0;
+  margin-right: 1rem;
   border: 2px solid black;
   font-weight: 400;
   font-size: 1rem;
@@ -211,6 +215,11 @@ th {
 
 .list-item-duration:hover, .list-item-duration.selected {
   cursor: pointer;
-  color: #F85441;
-  border-color: #F85441;
+  color: #5CBDEA;
+  border-color: #5CBDEA;
+}
+
+.list-item-duration.selected {
+  color: #89CFF0;
+  border-color: #89CFF0;
 }

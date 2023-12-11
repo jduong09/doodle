@@ -97,7 +97,7 @@ export const createPossibleTimeBlock = (date, startTime, duration) => {
   const minutes = startTime.split(':')[1];
   const timeframe = calculateTimeFrame(local24StartTime, duration);
   const position = classTopPosition(minutes);
-  span.innerHTML = startTime;
+  span.innerHTML = timeframe;
   span.classList.add('temp-timeblock', position, `h-${duration}`);
   return span;
 }

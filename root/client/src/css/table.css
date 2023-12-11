@@ -33,6 +33,7 @@ th {
   padding: .5rem 1rem;
   border-bottom: 1px solid black;
   border-spacing: 0 4px;
+  background-color: #89CFF0;
 }
 
 th h3, th h2 {
@@ -41,6 +42,10 @@ th h3, th h2 {
 
 th h3 {
   margin-bottom: .5rem;
+}
+
+tr {
+  border-bottom: 1px solid black;
 }
 
 td {
@@ -54,6 +59,7 @@ tr > td:first-child {
 }
 */
 
+/*
 tr:nth-child(even) td, tr:nth-child(even) td {
   background-color: hsla(6, 93%, 71%, .25);
 }
@@ -61,6 +67,7 @@ tr:nth-child(even) td, tr:nth-child(even) td {
 tr:nth-child(odd) td, tr:nth-child(odd) td{
   background-color: white;
 }
+*/
 
 .cell-time-slot {
   position: relative;
@@ -81,6 +88,7 @@ tr:nth-child(odd) td, tr:nth-child(odd) td{
   border-right: 1px solid black;
   */
   height: 25%;
+  cursor: pointer;
 }
 
 /*
@@ -96,8 +104,10 @@ tr:nth-child(odd) td, tr:nth-child(odd) td{
   display: flex;
   align-items: center;
   justify-content: space-between;  
-  background-color: #fa8072;
+  background-color: #89CFF0;
   z-index: 10;
+  padding: .25rem;
+  text-align: center;
 }
 
 .span-time-block > span {
@@ -105,22 +115,19 @@ tr:nth-child(odd) td, tr:nth-child(odd) td{
   font-weight: 700;
 }
 
-.span-time-block, .temp-timeblock {
-  padding: .25rem;
-  text-align: center;
+.temp-timeblock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
 }
 
-.span-time-block {
+.span-time-block, .temp-timeblock {
   pointer-events: none;
 }
 
 .span-time-block > button {
   pointer-events: auto;
-}
-
-.temp-timeblock {
-  background-color: #F85441;
-  pointer-events: none;
 }
 
 .h-15 {

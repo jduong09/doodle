@@ -61,9 +61,9 @@ export const PollForm = ({ handleSubmit, editData }) => {
         <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
       </label>
       {!toggleDays &&
-        <div id="div-duration">Duration:
+        <div id="div-duration">Duration
           <ul id="list-durations">
-            <li className="list-item-duration" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15 Min</li>
+            <li className="list-item-duration selected" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15 Min</li>
             <li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30 Min</li>
             <li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>1 Hr</li>
           </ul>
@@ -87,15 +87,3 @@ export const PollForm = ({ handleSubmit, editData }) => {
     </form>
   );
 };
-
-/*
-{!toggleDays
-        && <label htmlFor='pollDuration'>Duration:
-            <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(parseInt(e.target.value))}>
-              <option value='15'>15 mins</option>
-              <option value='30'>30 mins</option>
-              <option value='60'>1 hour</option>
-              <option value='120'>2 hours</option>
-            </select>
-      </label>}
-*/

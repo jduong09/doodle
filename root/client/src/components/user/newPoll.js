@@ -18,7 +18,8 @@ export const NewPoll = () => {
     <div>
       <header>
         <h1>Doodle</h1>
-        <div>New Poll</div>
+        <h2>New Poll</h2>
+        <div></div>
       </header>
       <main>
         <div id="div-form">
