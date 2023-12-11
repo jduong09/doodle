@@ -176,3 +176,31 @@ th {
 #btn-form-submit {
   display: block;
 }
+
+#div-duration {
+  width: 50%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+#list-durations {
+  display: flex;
+  width: 75%;
+  margin: 1rem auto;
+}
+
+
+.list-item-duration {
+  padding: .5rem;
+  margin: 1rem 1rem 0 0;
+  border: 2px solid black;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.list-item-duration:hover, .list-item-duration.selected {
+  cursor: pointer;
+  color: #F85441;
+  border-color: #F85441;
+}
