@@ -40,6 +40,15 @@ export const PollForm = ({ handleSubmit, editData }) => {
     setPollAvailabilities({});
   }
 
+  const handleDurationClick = (minutes, e) => {
+    const previousDuration = document.querySelector(`li.list-item-duration[data-duration="${pollDuration}"]`);
+    previousDuration.classList.remove('selected');
+    if (!e.target.classList.contains('selected')) {
+      e.target.classList.add('selected');
+    }
+    setPollDuration(minutes);
+  }
+
   return (
     <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
       <label htmlFor='inputName'>Name
@@ -51,15 +60,15 @@ export const PollForm = ({ handleSubmit, editData }) => {
       <label htmlFor='inputLocation'>Location
         <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
       </label>
-      {!toggleDays
-        && <label htmlFor='pollDuration'>Duration:
-            <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(parseInt(e.target.value))}>
-              <option value='15'>15 mins</option>
-              <option value='30'>30 mins</option>
-              <option value='60'>1 hour</option>
-              <option value='120'>2 hours</option>
-            </select>
-      </label>}
+      {!toggleDays &&
+        <div id="div-duration">Duration:
+          <ul id="list-durations">
+            <li className="list-item-duration" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15 Min</li>
+            <li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30 Min</li>
+            <li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>1 Hr</li>
+          </ul>
+        </div>
+      }
       <label htmlFor='inputAvailabilities'>Availabilities
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
       </label>
@@ -78,3 +87,15 @@ export const PollForm = ({ handleSubmit, editData }) => {
     </form>
   );
 };
+
+/*
+{!toggleDays
+        && <label htmlFor='pollDuration'>Duration:
+            <select id='pollDuration' name='pollDuration' value={pollDuration} onChange={e => setPollDuration(parseInt(e.target.value))}>
+              <option value='15'>15 mins</option>
+              <option value='30'>30 mins</option>
+              <option value='60'>1 hour</option>
+              <option value='120'>2 hours</option>
+            </select>
+      </label>}
+*/

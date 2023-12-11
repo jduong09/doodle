@@ -14,8 +14,8 @@ export const ResultsList = ({ availabilities, responses, duration }) => {
         if (duration === 1440) {
           timeFrame = 'All Day';
         } else {
-          timeFrame = calculateTimeFrame(local24StartTime, duration);
           const local24StartTime = `${dateObject.getHours()}:${startTime.split(':')[1]}`;
+          timeFrame = calculateTimeFrame(local24StartTime, duration);
         }
         
         if (Object.keys(responses).length && responses[`${date}T${startTime}.000Z`]) {
