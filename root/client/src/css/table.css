@@ -169,7 +169,7 @@ tr:nth-child(odd) td, tr:nth-child(odd) td{
 #table-header {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
   margin-bottom: 1rem;
 }
 
