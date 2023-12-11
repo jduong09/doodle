@@ -114,9 +114,6 @@ th {
   display: none;
 }
 
-
-
-
 #list-polls > li > h3 {
   font-size: 1.25rem;
 }
@@ -127,4 +124,55 @@ th {
 
 #list-polls > li > button:last-child {
   margin-bottom: 0;
+}
+
+#div-monthlyTable > h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#div-calendar {
+  border: 1px solid black;
+  width: fit-content;
+}
+
+.week {
+  display: flex;
+}
+
+.monthlyCalendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: .5rem;
+  border: 1px solid black;
+}
+
+.monthlyCalendar-day.selected, #btn-toggle-times.selected, #btn-toggle-days.selected {
+  background-color: #fa8072;
+}
+
+.monthlyCalendar-day:hover, #btn-toggle-times:hover, #btn-toggle-days:hover {
+  background-color: #F85441;
+}
+
+.monthlyCalendar-day.selected:hover, #btn-toggle-times.selected:hover, #btn-toggle-days.selected:hover {
+  background-color: #FFFFFF;
+}
+
+.week > li > h2 {
+  font-weight: 700;
+}
+
+/* Testing CSS */
+#btn-toggle-times.selected, #btn-toggle-days.selected {
+  margin: 3rem 0;
+}
+
+#btn-form-submit {
+  display: block;
 }
