@@ -49,27 +49,33 @@ export const PollForm = ({ handleSubmit, editData }) => {
     setPollDuration(minutes);
   }
 
+  const listDurations = toggleDays
+    ? <ul id='list-durations'><li className="list-item-duration selected" data-duration='all-day'>All</li></ul>
+    : (<ul id='list-durations'><li className="list-item-duration selected" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15</li><li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30</li><li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>60</li></ul>);
+
   return (
     <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
-      <label htmlFor='inputName'>Name
-        <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
-      </label>
-      <label htmlFor='inputDescription'>Description
-        <input id='inputDescription' name='pollDescription' type='text' onChange={e => setPollDescription(e.target.value)} placeholder='Meeting, Conference, Birthday Party...' value={pollDescription} />
-      </label>
-      <label htmlFor='inputLocation'>Location
-        <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
-      </label>
-      {!toggleDays &&
-        <div id="div-duration">Duration
-          <ul id="list-durations">
-            <li className="list-item-duration selected" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15 Min</li>
-            <li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30 Min</li>
-            <li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>1 Hr</li>
-          </ul>
-        </div>
-      }
-      <label htmlFor='inputAvailabilities'>Availabilities
+      <div>
+        <label htmlFor='inputName'>Name
+          <input id='inputName' name='pollName' type='text' onChange={e => setPollName(e.target.value)} placeholder='John Doe' value={pollName} />
+          <span></span>
+        </label>
+      </div>
+      <div>
+        <label htmlFor='inputDescription'>Description
+          <input id='inputDescription' name='pollDescription' type='text' onChange={e => setPollDescription(e.target.value)} placeholder='Meeting, Conference, Birthday Party...' value={pollDescription} />
+          <span></span>
+        </label>
+      </div>
+      <div>
+        <label htmlFor='inputLocation'>Location
+          <input id='inputLocation' name='pollLocation' type='text' onChange={e => { setPollLocation(e.target.value) }} placeholder='Conference Room A' value={pollLocation} />
+          <span></span>
+        </label>
+      </div>
+        <div id="div-duration">Duration {listDurations}</div>
+      {/* Does this input need to be here anymore. */}
+      <label htmlFor='inputAvailabilities'>
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
       </label>
       <div id='div-calendars'>

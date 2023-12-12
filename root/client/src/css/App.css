@@ -6,7 +6,6 @@
   Pastel Green: #BAED91
   Pastel Purple: #F2A2E8
 */
-
 header {
   display: flex;
   justify-content: space-between;
@@ -46,7 +45,6 @@ main {
 
 button {
   padding: .5rem 1.5rem;
-  border: 2px solid black;
   font-weight: 600;
 }
 
@@ -64,35 +62,52 @@ form {
   flex-wrap: wrap;
 }
 
-form > label {
+form > div {
   width: 50%;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
+form > div:nth-child(3), form > div:nth-child(4) {
+  margin-bottom: 0;
+}
+
 label > input {
   display: block;
   width: 75%;
   padding: .5rem;
-  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: 400;
+  /*
   border: 2px solid #89CFF0;
   border-radius: 4px;
+  */
+}
+
+#div-calendars {
+  margin-top: 2rem;
+  position: relative;
+}
+
+#div-calendars::before {
+  content: '';
+  width: 100%;
+  height: 4px;
+  background-color: #89CFF0;
+  position: absolute;
+  top: 0rem;
+  left: 0;
 }
 
 #table-btns {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
 }
 
 #table-btns > ul {
   display: flex;
-}
-
-#table-btns > ul > li:last-of-type {
-  margin-left: 1rem;
 }
 
 form > label:last-of-type, #div-availabilities-table, table, thead, tr {
@@ -148,18 +163,35 @@ th {
   width: 100%;
 }
 
+#div-calendars > ul {
+  margin-bottom: 1rem;
+}
+
 .week {
   display: flex;
 }
 
+#monthlyTable-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+#monthlyTable-header > h2 {
+  background-color: #89CFF0;
+}
+
+#btn-prev-month, #btn-next-month, #monthlyTable-header > h2 {
+  padding: .5rem 1rem;
+}
+
 .monthlyCalendar-day {
+  width: calc(100% / 7);
+  aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  padding: .5rem;
   border: 1px solid black;
   cursor: pointer;
 }
@@ -168,16 +200,20 @@ th {
   pointer-events: none;
 }
 
-.monthlyCalendar-day.selected, #btn-toggle-times.selected, #btn-toggle-days.selected {
+.monthlyCalendar-day.selected, #btn-toggle-times.selected, #btn-toggle-days.selected, #btn-toggle-times.selected:hover, #btn-toggle-days.selected:hover {
   background-color: #89CFF0;
 }
 
-.monthlyCalendar-day:hover, #btn-toggle-times:hover, #btn-toggle-days:hover {
+.monthlyCalendar-day:hover {
   background-color: #5CBDEA;
 }
 
-.monthlyCalendar-day.selected:hover, #btn-toggle-times.selected:hover, #btn-toggle-days.selected:hover {
-  background-color: #FFFFFF;
+#btn-toggle-times:hover, #btn-toggle-days:hover {
+  background-color: #89CFF0;
+}
+
+.monthlyCalendar-day.selected:hover {
+  background-color: #FFFFFF !important;
 }
 
 .week > li > h2 {
@@ -185,12 +221,14 @@ th {
 }
 
 /* Testing CSS */
-#btn-toggle-times.selected, #btn-toggle-days.selected {
-  margin: 3rem 0;
-}
 
 #btn-form-submit {
   display: block;
+  border: 2px solid black;
+}
+
+#btn-form-submit:hover {
+  border-color: #89CFF0;
 }
 
 #div-duration {
@@ -201,13 +239,11 @@ th {
 
 #list-durations {
   display: flex;
-  margin: 1rem auto;
 }
-
 
 .list-item-duration {
   padding: .5rem;
-  margin-right: 1rem;
+  margin-right: .5rem;
   border: 2px solid black;
   font-weight: 400;
   font-size: 1rem;
@@ -222,4 +258,29 @@ th {
 .list-item-duration.selected {
   color: #89CFF0;
   border-color: #89CFF0;
+}
+
+input {
+  border: 1px solid #e7e5e5;
+  background-color: #e7e5e5;
+}
+
+label {
+  position: relative;
+}
+
+label > input + span {
+  display: block;
+  margin: auto;
+  height: 2px;
+  width: 0px;
+  position: absolute;
+  left: 0;
+  background-color: transparent;
+  transition: width .5s ease, background-color .5s ease;
+}
+
+label > input:focus + span {
+  width: 75%;
+  background: #89CFF0;
 }

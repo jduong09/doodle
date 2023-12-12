@@ -2,6 +2,30 @@ html {
   font-family: sans-serif;
 }
 
+#table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#week-current {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+#table-header > ul {
+  display: flex;
+}
+
+#btn-prev-week, #btn-next-week {
+  border: 0;
+  padding: .5rem 1rem;
+}
+
+#btn-prev-week:hover, #btn-next-week:hover {
+  background-color: #89CFF0;
+}
+
 table {
   /*display: block;
   width: fit-content; */
@@ -20,8 +44,13 @@ table {
 }
 
 tr > td:first-child, th:first-child {
+  width: 10%;
   font-weight: 700;
   border-right: 1px solid black;
+}
+
+tr > td:not(:first-child) {
+  width: calc(90% / 7);
 }
 
 .cell-time-slot > div {
@@ -51,23 +80,8 @@ tr {
 td {
   vertical-align: middle;
   text-align: center;
+  width: calc(100% / 8);
 }
-
-/*
-tr > td:first-child {
-  border: 1px solid black;
-}
-*/
-
-/*
-tr:nth-child(even) td, tr:nth-child(even) td {
-  background-color: hsla(6, 93%, 71%, .25);
-}
-
-tr:nth-child(odd) td, tr:nth-child(odd) td{
-  background-color: white;
-}
-*/
 
 .cell-time-slot {
   position: relative;
@@ -81,14 +95,14 @@ tr:nth-child(odd) td, tr:nth-child(odd) td{
 }
 
 .cell-time-slot > div {
+  height: 25%;
+  cursor: pointer;
   /*
   border-bottom: 1px solid grey;
   border-top: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
   */
-  height: 25%;
-  cursor: pointer;
 }
 
 /*
@@ -171,32 +185,4 @@ tr:nth-child(odd) td, tr:nth-child(odd) td{
   padding: 0;
   border: 0;
   margin: 0 0 0 auto;
-}
-
-#table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 1rem;
-}
-
-#week-current {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-#table-header > ul {
-  display: flex;
-}
-
-#table-header ul {
-  border: 1px solid black;
-}
-
-#btn-prev-week, #btn-next-week {
-  border: 0;
-}
-
-#btn-prev-week:hover, #btn-next-week:hover {
-  background-color: #fa8072;
 }
