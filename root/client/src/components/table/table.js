@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react';
 import '../../css/table.css';
 import { TableRow } from './tableRow';
+import { convertIntToMonth } from '../../util/tablehelpers';
 
 export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) => {
   const [week, setWeek] = useState({});
@@ -149,10 +150,13 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
     );
   });
 
+  const sunday = new Date(week['Sunday']);
+  const saturday = new Date(week['Saturday']);
+
   return (
     <div id="div-availabilities-table">
       <div id="table-header">
-        <div id="week-current">{`${new Date(week['Sunday']).toDateString()} - ${new Date(week['Saturday']).toDateString()}`}</div>
+        <h2 id="week-current">{`Sunday, ${convertIntToMonth(sunday.getMonth())} ${sunday.getDate()}, ${sunday.getFullYear()} - Saturday, ${convertIntToMonth(saturday.getMonth())} ${saturday.getDate()}, ${saturday.getFullYear()}`}</h2>
         <div id="table-btns">
           <ul>
             <li>

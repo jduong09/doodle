@@ -177,11 +177,11 @@ th {
   justify-content: space-between;
 }
 
-#monthlyTable-header > h2 {
+#monthlyTable-header > h2, #week-current {
   background-color: #89CFF0;
 }
 
-#btn-prev-month, #btn-next-month, #monthlyTable-header > h2 {
+#btn-prev-month, #btn-next-month, #monthlyTable-header > h2, #week-current {
   padding: .5rem 1rem;
 }
 

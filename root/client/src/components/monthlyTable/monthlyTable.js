@@ -13,12 +13,17 @@ export const MonthlyTable = ({ pollAvailabilities, setPollAvailabilities }) => {
     const dayOfWeek = todaysDate.getDay();
     const dayOfMonth = todaysDate.getDate();
     setYear(todaysDate.getFullYear());
-
+    
     const numSinceFirst = dayOfMonth - 1;
 
-    const numAdj = numSinceFirst > 7 ? numSinceFirst % 7 : 7 % numSinceFirst;
+    const numAdj = dayOfWeek + numSinceFirst > 7 ? numSinceFirst % 7 : 7 % numSinceFirst;
 
-    const firstDayOfWeek = numAdj + dayOfWeek;
+    let firstDayOfWeek;
+    if (numAdj + dayOfWeek > 6) {
+      firstDayOfWeek = numAdj + dayOfWeek - 6 + dayOfWeek;
+    } else {
+      firstDayOfWeek = numAdj + dayOfWeek;
+    }
 
     setFirstDayOfMonth(findDayOfWeek(firstDayOfWeek))
 
