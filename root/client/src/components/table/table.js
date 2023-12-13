@@ -156,7 +156,7 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
   return (
     <div id="div-availabilities-table">
       <div id="table-header">
-        <h2 id="week-current">{`Sunday, ${convertIntToMonth(sunday.getMonth())} ${sunday.getDate()}, ${sunday.getFullYear()} - Saturday, ${convertIntToMonth(saturday.getMonth())} ${saturday.getDate()}, ${saturday.getFullYear()}`}</h2>
+        {week && <h2 id="week-current">{`Sunday, ${convertIntToMonth(sunday.getMonth())} ${sunday.getDate()}, ${sunday.getFullYear()} - Saturday, ${convertIntToMonth(saturday.getMonth())} ${saturday.getDate()}, ${saturday.getFullYear()}`}</h2>}
         <div id="table-btns">
           <ul>
             <li>
