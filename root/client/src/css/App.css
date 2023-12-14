@@ -28,7 +28,7 @@ h1, h2, h3 {
 }
 
 header > h2 {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 #btn-poll-create {
@@ -136,12 +136,27 @@ th {
   gap: 1rem;
 }
 
-#list-polls > li, #ul-availabilities > li {
-  padding: 1.5rem 1rem;
-  border: 2px solid #89CFF0;
-  text-align: center;
+.list-item-poll, .list-item-availability {
   display: flex;
   flex-direction: column;
+  padding: 1.5rem 1rem;
+  border: 1px solid transparent;
+  box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .15);
+  text-align: center;
+}
+
+.list-item-availability {
+  position: relative;
+}
+
+.list-item-availability::before {
+  width: calc(100% + 2px);
+  height: 16px;
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  background-color: #89CFF0;
 }
 
 #btn-form-submit {
@@ -153,7 +168,7 @@ th {
   display: none;
 }
 
-#list-polls > li > h3 {
+.list-item-poll > h3 {
   font-size: 1.25rem;
 }
 
