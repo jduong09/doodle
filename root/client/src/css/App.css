@@ -31,12 +31,20 @@ header > h2 {
   font-size: 2rem;
 }
 
-#btn-poll-create {
+#btn-poll-create, #btn-admin-update, #btn-admin-create {
   background-color: #FFFFFF;
   border-color: #FFFFFF;
 }
 
-#btn-poll-create:hover {
+#btn-admin-update, #btn-admin-create {
+  width: 100%;
+}
+
+#btn-admin-update {
+  margin-bottom: .25rem;
+}
+
+#btn-poll-create:hover, #btn-admin-update:hover, #btn-admin-create:hover {
   background-color: #5CBDEA;
   border-color: #5CBDEA;
 }
@@ -124,6 +132,10 @@ label > input {
 
 form > label:last-of-type, #div-availabilities-table, table, thead, tr {
   width: 100%;
+}
+
+#div-admin-availabilities #ul-participants {
+  margin-bottom: 0;
 }
 
 th {
