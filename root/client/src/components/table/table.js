@@ -3,12 +3,24 @@ import '../../css/table.css';
 import { TableRow } from './tableRow';
 import { convertIntToMonth } from '../../util/tablehelpers';
 
-export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) => {
+export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, startDate, endDate, startTime, endTime }) => {
   const [week, setWeek] = useState({});
   const mounted = useRef(false);
 
+  const startDateObject = new Date(`${startDate}T00:00:00.000Z`);
+     const endDateObject = new Date(`${endDate}T00:00:00.000Z`);
+
+     console.log('Start Date: ', startDateObject.toISOString());
+     console.log('End Date: ', endDateObject.toISOString());
+
+  // startDate, endDate 
+
+  // if the range is less than 7 days then the table is less than 7 days.
+  // if the range is greater than 7 days then we need to have a table of 7 days and an arrow to move forward and back.
+
   useEffect(() => {
     if (!mounted.current) {
+      /*
       const today = new Date();
       const utcDayOfWeek = today.getUTCDay();
       let newStateWeek;
@@ -105,6 +117,12 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration }) =
         }
       }
       setWeek(newStateWeek);
+      */
+     const startDateObject = new Date(`${startDate}T00:00:00.000Z`);
+     const endDateObject = new Date(`${endDate}T00:00:00.000Z`);
+
+     console.log('Start Date: ', startDateObject.toLocaleDateString());
+     console.log('End Date: ', endDateObject.toLocaleDateString());
       mounted.current = true;
     }
   }, [week]);

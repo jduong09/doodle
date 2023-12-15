@@ -10,6 +10,19 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
   const [toggleDays, setToggleDays] = useState(editData && editData.duration === 1440 ? true : false);
 
+
+  const [pollStartDate, setPollStartDate] = useState(editData ? editData.startDate : '');
+  const [pollEndDate, setPollEndDate] = useState(editData ? editData.endDate : '');
+  
+  console.log('Poll Start Date: ', pollStartDate);
+  console.log('Poll End Date: ', pollEndDate);
+
+  const [pollStartTime, setPollStartTime] = useState(editData ? editData.startTime : '');
+  const [pollEndTime, setPollEndTime] = useState(editData ? editData.endTime : '');
+
+  console.log('Poll Start Time: ', pollStartTime);
+  console.log('Poll End Time: ', pollEndTime);
+
   const resetFormData = () => {
     setPollName('');
     setPollDescription('');
@@ -53,6 +66,12 @@ export const PollForm = ({ handleSubmit, editData }) => {
     ? <ul id='list-durations'><li className="list-item-duration selected" data-duration='all-day'>All</li></ul>
     : (<ul id='list-durations'><li className="list-item-duration selected" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15</li><li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30</li><li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>60</li></ul>);
 
+  const listOptions = [...Array(24).keys()].map((hour, idx) => {
+    return (
+      <option key={idx} value={`${hour.length === 1 ? `0${hour}:00` : `${hour}:00`}`}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
+    )
+  });
+
   return (
     <form action={editData ? `/polls/${editData.id}` : '/polls'} onSubmit={(e) => handleFormSubmit(e)}>
       <div>
@@ -73,7 +92,25 @@ export const PollForm = ({ handleSubmit, editData }) => {
           <span></span>
         </label>
       </div>
-        <div id="div-duration">Duration {listDurations}</div>
+      <div id="div-duration">Duration {listDurations}</div>
+      <div>
+        <label htmlFor='inputStartDate'>Start Date
+          <input id='inputStartDate' name='pollStartDate' type='date' onChange={e => { setPollStartDate(e.target.value) }} value={pollStartDate} />
+        </label>
+        <label htmlFor='inputEndDate'>End Date
+          <input id='inputEndDate' name='pollEndDate' type='date' onChange={e => { setPollEndDate(e.target.value) }} value={pollEndDate} />
+        </label>
+      </div>
+      {pollStartDate && pollEndDate
+        &&
+        <div>
+          <label htmlFor='selectStartTime'>Start Time
+            <select id='selectStartTime' onChange={(e) => setPollStartTime(e.target.value)} value={pollStartTime} >{listOptions}</select>
+          </label>
+          <label htmlFor='selectEndTime'>End Time
+            <select id='selectEndTime' onChange={(e) => setPollEndTime(e.target.value)} value={pollEndTime} >{listOptions}</select>
+          </label>
+        </div>}
       {/* Does this input need to be here anymore. */}
       <label htmlFor='inputAvailabilities'>
         <input id='inputAvailabilities' name='pollAvailabilities' type='text' value={pollAvailabilities} readOnly="readOnly" hidden/>
@@ -87,7 +124,14 @@ export const PollForm = ({ handleSubmit, editData }) => {
         </ul>
         {toggleDays
           ? <MonthlyTable setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
-          : <Table duration={pollDuration} setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />}
+          : <Table
+              duration={pollDuration}
+              setPollAvailabilities={setPollAvailabilities}
+              pollAvailabilities={pollAvailabilities}
+              startDate={pollStartDate}
+              endDate={pollEndDate}
+              startTime={pollStartTime}
+              endTime={pollEndTime} />}
       </div>
       <button type='submit' id="btn-form-submit">{editData ? 'Update' : 'Create'}</button>
     </form>
