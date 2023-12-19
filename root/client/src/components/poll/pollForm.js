@@ -124,14 +124,14 @@ export const PollForm = ({ handleSubmit, editData }) => {
         </ul>
         {toggleDays
           ? <MonthlyTable setPollAvailabilities={setPollAvailabilities} pollAvailabilities={pollAvailabilities} />
-          : <Table
+          : (pollStartDate && pollEndDate && <Table
               duration={pollDuration}
               setPollAvailabilities={setPollAvailabilities}
               pollAvailabilities={pollAvailabilities}
               startDate={pollStartDate}
               endDate={pollEndDate}
               startTime={pollStartTime}
-              endTime={pollEndTime} />}
+              endTime={pollEndTime} />)}
       </div>
       <button type='submit' id="btn-form-submit">{editData ? 'Update' : 'Create'}</button>
     </form>

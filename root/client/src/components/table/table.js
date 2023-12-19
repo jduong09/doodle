@@ -1,25 +1,52 @@
 import { React, useState, useEffect, useRef } from 'react';
 import '../../css/table.css';
 import { TableRow } from './tableRow';
-import { convertIntToMonth } from '../../util/tablehelpers';
+import { convertIntToMonth, dateDiff } from '../../util/tablehelpers';
+const DAYABBRIEVATIONS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, startDate, endDate, startTime, endTime }) => {
   const [week, setWeek] = useState({});
   const mounted = useRef(false);
 
-  const startDateObject = new Date(`${startDate}T00:00:00.000Z`);
-     const endDateObject = new Date(`${endDate}T00:00:00.000Z`);
-
-     console.log('Start Date: ', startDateObject.toISOString());
-     console.log('End Date: ', endDateObject.toISOString());
-
-  // startDate, endDate 
-
   // if the range is less than 7 days then the table is less than 7 days.
   // if the range is greater than 7 days then we need to have a table of 7 days and an arrow to move forward and back.
 
   useEffect(() => {
+    if (startDate && endDate) {
+      const startDateObject = new Date(`${startDate}T12:00:00.000Z`);
+      const endDateObject = new Date(`${endDate}T00:00:00.000Z`);
+
+      const tableLength = dateDiff(startDateObject, endDateObject) + 1;
+
+      if (tableLength && tableLength > 6) {
+        const newStateWeek = {
+          0: startDateObject[Symbol.toPrimitive]('number'),
+          1: new Date().setDate(startDateObject.getDate() + 1),
+          2: new Date().setDate(startDateObject.getDate() + 2),
+          3: new Date().setDate(startDateObject.getDate() + 3),
+          4: new Date().setDate(startDateObject.getDate() + 4),
+          5: new Date().setDate(startDateObject.getDate() + 5),
+          6: new Date().setDate(startDateObject.getDate() + 6),
+        }
+        // we can show the arrows for previous and next.
+        setWeek(newStateWeek);
+      } else {
+        // table length < 6,
+        const newStateWeek = {};
+
+        newStateWeek[0] = startDateObject[Symbol.toPrimitive]('number');
+
+        for (let i = 1; i <= tableLength; i++) {
+          const newDateObject = new Date().setDate(startDateObject.getDate() + i);
+          newStateWeek[i] = newDateObject;
+        }
+        console.log('New State: ', newStateWeek);
+        setWeek(newStateWeek);
+      }
+    }
     if (!mounted.current) {
+      mounted.current = true;
+    }
       /*
       const today = new Date();
       const utcDayOfWeek = today.getUTCDay();
@@ -117,19 +144,20 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
         }
       }
       setWeek(newStateWeek);
-      */
-     const startDateObject = new Date(`${startDate}T00:00:00.000Z`);
-     const endDateObject = new Date(`${endDate}T00:00:00.000Z`);
-
-     console.log('Start Date: ', startDateObject.toLocaleDateString());
-     console.log('End Date: ', endDateObject.toLocaleDateString());
       mounted.current = true;
+    } else {
     }
-  }, [week]);
+    */
+  }, [startDate, endDate]);
 
   const handlePrevWeek = (e) => {
     e.preventDefault();
     const newStateWeek = {};
+
+    const sevenDaysFromStart = week[0] - (7 * 24 * 60 * 60 * 1000);
+
+    console.log(new Date(sevenDaysFromStart).toISOString());
+    console.log(sevenDaysFromStart < new Date(`${startDate}T12:00:00.000Z`)[Symbol.toPrimitive]('number'));
 
     for (const day in week) {
       newStateWeek[day] = week[day] - (7 * 24 * 60 * 60 * 1000)
@@ -160,9 +188,10 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
   });
 
   const tHeadRow = Object.keys(week).map((weekDay, idx) => {
+    const dateObj = new Date(week[weekDay]);
     return (
       <th key={idx}>
-        <h3>{weekDay.slice(0, 3)}</h3>
+        <h3>{DAYABBRIEVATIONS[dateObj.getDay()]}</h3>
         <h2>{new Date (week[weekDay]).getUTCDate()}</h2>
       </th>
     );
