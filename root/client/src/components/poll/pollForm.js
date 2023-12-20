@@ -14,14 +14,8 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollStartDate, setPollStartDate] = useState(editData ? editData.startDate : '');
   const [pollEndDate, setPollEndDate] = useState(editData ? editData.endDate : '');
   
-  console.log('Poll Start Date: ', pollStartDate);
-  console.log('Poll End Date: ', pollEndDate);
-
   const [pollStartTime, setPollStartTime] = useState(editData ? editData.startTime : '');
   const [pollEndTime, setPollEndTime] = useState(editData ? editData.endTime : '');
-
-  console.log('Poll Start Time: ', pollStartTime);
-  console.log('Poll End Time: ', pollEndTime);
 
   const resetFormData = () => {
     setPollName('');

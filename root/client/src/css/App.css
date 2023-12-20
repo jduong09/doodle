@@ -300,3 +300,7 @@ label > input:focus + span {
   width: 75%;
   background: #89CFF0;
 }
+
+.hide {
+  display: none !important;
+}
