@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { Table } from '../table/table';
 import { MonthlyTable } from '../monthlyTable/monthlyTable';
+import { range } from '../../util/tablehelpers';
 
 export const PollForm = ({ handleSubmit, editData }) => {
   const [pollName, setPollName] = useState(editData ? editData.name : '');
@@ -14,8 +15,10 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollStartDate, setPollStartDate] = useState(editData ? editData.startDate : '');
   const [pollEndDate, setPollEndDate] = useState(editData ? editData.endDate : '');
   
-  const [pollStartTime, setPollStartTime] = useState(editData ? editData.startTime : '');
-  const [pollEndTime, setPollEndTime] = useState(editData ? editData.endTime : '');
+  const [pollStartTime, setPollStartTime] = useState(editData ? editData.startTime : 0);
+  const [pollEndTime, setPollEndTime] = useState(editData ? editData.endTime : 23);
+  console.log(pollStartTime);
+  console.log(pollEndTime);
 
   const resetFormData = () => {
     setPollName('');
@@ -60,9 +63,26 @@ export const PollForm = ({ handleSubmit, editData }) => {
     ? <ul id='list-durations'><li className="list-item-duration selected" data-duration='all-day'>All</li></ul>
     : (<ul id='list-durations'><li className="list-item-duration selected" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15</li><li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30</li><li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>60</li></ul>);
 
+    /*
   const listOptions = [...Array(24).keys()].map((hour, idx) => {
     return (
-      <option key={idx} value={`${hour.length === 1 ? `0${hour}:00` : `${hour}:00`}`}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
+      <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
+    )
+  });
+  */
+
+  const startRangeEnd = pollEndTime ? pollEndTime - 1 : 23;
+  const endRangeStart = pollStartTime ? pollStartTime + 1 : 0;
+
+  const listStartOptions = range(startRangeEnd + 1, 0).map((hour, idx) => {
+    return (
+      <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
+    )
+  });
+
+  const listEndOptions = range(23 - endRangeStart, endRangeStart).map((hour, idx) => {
+    return (
+      <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
     )
   });
 
@@ -99,10 +119,10 @@ export const PollForm = ({ handleSubmit, editData }) => {
         &&
         <div>
           <label htmlFor='selectStartTime'>Start Time
-            <select id='selectStartTime' onChange={(e) => setPollStartTime(e.target.value)} value={pollStartTime} >{listOptions}</select>
+            <select id='selectStartTime' onChange={(e) => setPollStartTime(parseInt(e.target.value))} value={pollStartTime} >{listStartOptions}</select>
           </label>
           <label htmlFor='selectEndTime'>End Time
-            <select id='selectEndTime' onChange={(e) => setPollEndTime(e.target.value)} value={pollEndTime} >{listOptions}</select>
+            <select id='selectEndTime' onChange={(e) => setPollEndTime(parseInt(e.target.value))} value={pollEndTime} >{listEndOptions}</select>
           </label>
         </div>}
       {/* Does this input need to be here anymore. */}

@@ -1,11 +1,13 @@
 import { React, useState, useEffect } from 'react';
 import '../../css/table.css';
 import { TableRow } from './tableRow';
-import { convertIntToMonth, dateDiff } from '../../util/tablehelpers';
+import { convertIntToMonth, dateDiff, range } from '../../util/tablehelpers';
 const DAYABBRIEVATIONS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, startDate, endDate, startTime, endTime }) => {
   const [week, setWeek] = useState({});
+  const [startDay, setStartDay] = useState(null);
+  const [endDay, setEndDay] = useState(null);
   // const mounted = useRef(false);
 
   // if the range is less than 7 days then the table is less than 7 days.
@@ -14,34 +16,41 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
   useEffect(() => {
     if (startDate && endDate) {
       const startDateObject = new Date(`${startDate}T12:00:00.000Z`);
-      const endDateObject = new Date(`${endDate}T00:00:00.000Z`);
+      const endDateObject = new Date(`${endDate}T12:00:00.000Z`);
       const tableBtnsDiv = document.getElementById('table-btns')
 
       const tableLength = dateDiff(startDateObject, endDateObject) + 1;
-
       if (tableLength && tableLength > 7) {
         const newStateWeek = {
           0: startDateObject[Symbol.toPrimitive]('number'),
-          1: new Date().setDate(startDateObject.getDate() + 1),
-          2: new Date().setDate(startDateObject.getDate() + 2),
-          3: new Date().setDate(startDateObject.getDate() + 3),
-          4: new Date().setDate(startDateObject.getDate() + 4),
-          5: new Date().setDate(startDateObject.getDate() + 5),
-          6: new Date().setDate(startDateObject.getDate() + 6),
+          1: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24),
+          2: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 2),
+          3: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 3),
+          4: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 4),
+          5: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 5),
+          6: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6),
         }
         // we can show the arrows for previous and next.
         tableBtnsDiv.classList.remove('hide');
         setWeek(newStateWeek);
+        setStartDay(startDateObject[Symbol.toPrimitive]('number'));
+        setEndDay(new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6));
       } else {
         // table length < 6,
         const newStateWeek = {};
         newStateWeek[0] = startDateObject[Symbol.toPrimitive]('number');
-        for (let i = 1; i <= tableLength; i++) {
-          const newDateObject = new Date().setDate(startDateObject.getDate() + i);
+        let lastDay;
+        for (let i = 1; i < tableLength; i++) {
+          const newDateObject = new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * i);
+          if (i === tableLength - 1) {
+            lastDay = newDateObject;
+          }
           newStateWeek[i] = newDateObject;
         }
         tableBtnsDiv.classList.add('hide');
         setWeek(newStateWeek);
+        setStartDay(startDateObject[Symbol.toPrimitive]('number'));
+        setEndDay(lastDay);
       }
     }
     /*
@@ -161,78 +170,83 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
     if (sevenDaysFromStart < startDateObject[Symbol.toPrimitive]('number')) {
       const newStateWeek = {
         0: startDateObject[Symbol.toPrimitive]('number'),
-        1: new Date().setDate(startDateObject.getDate() + 1),
-        2: new Date().setDate(startDateObject.getDate() + 2),
-        3: new Date().setDate(startDateObject.getDate() + 3),
-        4: new Date().setDate(startDateObject.getDate() + 4),
-        5: new Date().setDate(startDateObject.getDate() + 5),
-        6: new Date().setDate(startDateObject.getDate() + 6),
+        1: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24),
+        2: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 2),
+        3: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 3),
+        4: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 4),
+        5: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 5),
+        6: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6),
       }
       // we can show the arrows for previous and next.
       setWeek(newStateWeek);
+      setStartDay(startDateObject[Symbol.toPrimitive]('number'));
+      setEndDay(new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6));
     } else {
       /* Else we set the start of the week to the day seven days back. */
       const newStartWeek = new Date(sevenDaysFromStart);
       const newStateWeek = {
         0: newStartWeek[Symbol.toPrimitive]('number'),
-        1: new Date().setDate(newStartWeek.getDate() + 1),
-        2: new Date().setDate(newStartWeek.getDate() + 2),
-        3: new Date().setDate(newStartWeek.getDate() + 3),
-        4: new Date().setDate(newStartWeek.getDate() + 4),
-        5: new Date().setDate(newStartWeek.getDate() + 5),
-        6: new Date().setDate(newStartWeek.getDate() + 6),
+        1: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24),
+        2: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 2),
+        3: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 3),
+        4: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 4),
+        5: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 5),
+        6: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 6),
       }
       // we can show the arrows for previous and next.
       setWeek(newStateWeek);
+      setStartDay(newStartWeek[Symbol.toPrimitive]('number'));
+      setEndDay(new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 6));
     }
-    /*
-    for (const day in week) {
-      newStateWeek[day] = week[day] - (7 * 24 * 60 * 60 * 1000)
-    }
-    
-    setWeek(newStateWeek);
-    */
   }
 
   const handleNextWeek = (e) => {
     e.preventDefault();
-    /*
-    const newStateWeek = {};
-    for (const day in week) {
-      newStateWeek[day] = week[day] + (7 * 24 * 60 * 60 * 1000)
+
+    // if the current week is less than 7, then the endDate should be in the week object and therefore any further dates is out of the scope of the range.
+    if (Object.keys(week).length < 7) {
+      return;
     }
-    setWeek(newStateWeek);
-    */
+  
     const sevenDaysForward = week[6] + (7 * 24 * 60 * 60 * 1000);
     const endDateObject = new Date(`${endDate}T12:00:00.000Z`);
     /* If going forward seven days from this current startWeek is past the given endDate, then we need to set the week to end of the previous week, and ends at endDate */
     if (sevenDaysForward > endDateObject[Symbol.toPrimitive]('number')) {
       const numDaysInNewWeek = Math.round((endDateObject - week[6]) / (24 * 60 * 60 * 1000));
-      console.log(numDaysInNewWeek);
       const newStateWeek = {};
+      let firstDay;
       for (let i = 0; i < numDaysInNewWeek - 1; i++) {
-        newStateWeek[i] = new Date().setDate(endDateObject.getDate() - (numDaysInNewWeek - i - 1));
+        if (i === 0) {
+          firstDay = new Date().setTime(endDateObject.getTime() - ((numDaysInNewWeek - i - 1) * 1000 * 60 * 60 * 24));
+        }
+        newStateWeek[i] = new Date().setTime(endDateObject.getTime() - (numDaysInNewWeek - i - 1) * 1000 * 60 * 60 * 24);
       }
       newStateWeek[numDaysInNewWeek - 1] = endDateObject[Symbol.toPrimitive]('number');
       setWeek(newStateWeek);
+      setStartDay(firstDay);
+      setEndDay(endDateObject[Symbol.toPrimitive]('number'));
     } else {
       /* Else, we set the start week as the next day of the previous end week, and the table is seven days as normal */
       const nextDayOfWeek = new Date(week[6] + (24 * 60 * 60 * 1000));
       const newStateWeek = {
         0: nextDayOfWeek[Symbol.toPrimitive]('number'),
-        1: new Date().setDate(nextDayOfWeek.getDate() + 1),
-        2: new Date().setDate(nextDayOfWeek.getDate() + 2),
-        3: new Date().setDate(nextDayOfWeek.getDate() + 3),
-        4: new Date().setDate(nextDayOfWeek.getDate() + 4),
-        5: new Date().setDate(nextDayOfWeek.getDate() + 5),
-        6: new Date().setDate(nextDayOfWeek.getDate() + 6),
+        1: new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24),
+        2: new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24 * 2),
+        3: new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24 * 3),
+        4: new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24 * 4),
+        5: new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24 * 5),
+        6: new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24 * 6),
       }
       setWeek(newStateWeek);
+      setStartDay(nextDayOfWeek[Symbol.toPrimitive]('number'));
+      setEndDay(new Date().setTime(nextDayOfWeek.getTime() + 1000 * 60 * 60 * 24 * 6));
     }
 
   }
 
-  const tbody = [...Array(24).keys()].map((hour, idx) => {
+  console.log(startTime, endTime);
+
+  const tbody = range(endTime - startTime, startTime).map((hour, idx) => {
     return (
       <tr key={idx}>
         <td>{hour < 12  ? `${hour === 0 ? 12 : hour} A.M.` : `${hour - 12 === 0 ? 12 : hour - 12} P.M.`}</td>
@@ -251,13 +265,12 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
     );
   });
 
-  const sunday = new Date(week['Sunday']);
-  const saturday = new Date(week['Saturday']);
-
+  const startDayObj = new Date(startDay);
+  const endDayObj = new Date(endDay); 
   return (
     <div id="div-availabilities-table">
       <div id="table-header">
-        {week && <h2 id="week-current">{`Sunday, ${convertIntToMonth(sunday.getMonth())} ${sunday.getDate()}, ${sunday.getFullYear()} - Saturday, ${convertIntToMonth(saturday.getMonth())} ${saturday.getDate()}, ${saturday.getFullYear()}`}</h2>}
+        {week && <h2 id="week-current">{startDay && `${DAYABBRIEVATIONS[startDayObj.getDay()]}, ${convertIntToMonth(startDayObj.getMonth())} ${startDayObj.getDate()}, ${startDayObj.getFullYear()}`}{startDay && endDay && `- `}{endDay && `${DAYABBRIEVATIONS[endDayObj.getDay()]}, ${convertIntToMonth(endDayObj.getMonth())} ${endDayObj.getDate()}, ${endDayObj.getFullYear()}`}</h2>}
         <div id="table-btns">
           <ul>
             <li>
