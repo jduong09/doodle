@@ -11,6 +11,10 @@ const Poll = mongoose.model(
     location: { type: String },
     duration: { type: Number },
     responses: { type: Object },
+    startDate: { type: String },
+    endDate: { type: String },
+    startTime: { type: Number },
+    endTime: { type: Number }
   }, {
     timestamps: true,
     minimize: false

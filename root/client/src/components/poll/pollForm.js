@@ -4,6 +4,7 @@ import { MonthlyTable } from '../monthlyTable/monthlyTable';
 import { range } from '../../util/tablehelpers';
 
 export const PollForm = ({ handleSubmit, editData }) => {
+  console.log(editData);
   const [pollName, setPollName] = useState(editData ? editData.name : '');
   const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
@@ -11,14 +12,12 @@ export const PollForm = ({ handleSubmit, editData }) => {
   const [pollAvailabilities, setPollAvailabilities] = useState(editData ? editData.availabilities : {});
   const [toggleDays, setToggleDays] = useState(editData && editData.duration === 1440 ? true : false);
 
-
+  // 2023-12-25
   const [pollStartDate, setPollStartDate] = useState(editData ? editData.startDate : '');
   const [pollEndDate, setPollEndDate] = useState(editData ? editData.endDate : '');
   
   const [pollStartTime, setPollStartTime] = useState(editData ? editData.startTime : 0);
-  const [pollEndTime, setPollEndTime] = useState(editData ? editData.endTime : 23);
-  console.log(pollStartTime);
-  console.log(pollEndTime);
+  const [pollEndTime, setPollEndTime] = useState(editData ? editData.endTime : 24);
 
   const resetFormData = () => {
     setPollName('');
@@ -30,7 +29,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities }, e.target.action, editData ? 'PATCH' : 'POST');
+    toggleDays ? handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities, pollStartDate : null, pollEndDate : null, pollStartTime: null, pollEndTime: null }, e.target.action, editData ? 'PATCH' : 'POST') : handleSubmit(e, { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities, pollStartDate, pollEndDate, pollStartTime, pollEndTime }, e.target.action, editData ? 'PATCH' : 'POST');
     resetFormData();
   }
 
@@ -63,14 +62,6 @@ export const PollForm = ({ handleSubmit, editData }) => {
     ? <ul id='list-durations'><li className="list-item-duration selected" data-duration='all-day'>All</li></ul>
     : (<ul id='list-durations'><li className="list-item-duration selected" data-duration='15' onClick={(e) => handleDurationClick(15, e)}>15</li><li className="list-item-duration" data-duration='30' onClick={(e) => handleDurationClick(30, e)}>30</li><li className="list-item-duration" data-duration='60' onClick={(e) => handleDurationClick(60, e)}>60</li></ul>);
 
-    /*
-  const listOptions = [...Array(24).keys()].map((hour, idx) => {
-    return (
-      <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
-    )
-  });
-  */
-
   const startRangeEnd = pollEndTime ? pollEndTime - 1 : 23;
   const endRangeStart = pollStartTime ? pollStartTime + 1 : 0;
 
@@ -80,7 +71,7 @@ export const PollForm = ({ handleSubmit, editData }) => {
     )
   });
 
-  const listEndOptions = range(23 - endRangeStart, endRangeStart).map((hour, idx) => {
+  const listEndOptions = range(25 - endRangeStart, endRangeStart).map((hour, idx) => {
     return (
       <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
     )
@@ -107,16 +98,16 @@ export const PollForm = ({ handleSubmit, editData }) => {
         </label>
       </div>
       <div id="div-duration">Duration {listDurations}</div>
-      <div>
-        <label htmlFor='inputStartDate'>Start Date
-          <input id='inputStartDate' name='pollStartDate' type='date' onChange={e => { setPollStartDate(e.target.value) }} value={pollStartDate} />
-        </label>
-        <label htmlFor='inputEndDate'>End Date
-          <input id='inputEndDate' name='pollEndDate' type='date' onChange={e => { setPollEndDate(e.target.value) }} value={pollEndDate} />
-        </label>
-      </div>
-      {pollStartDate && pollEndDate
-        &&
+      {!toggleDays && 
+        <div>
+          <label htmlFor='inputStartDate'>Start Date
+            <input id='inputStartDate' name='pollStartDate' type='date' onChange={e => { setPollStartDate(e.target.value) }} value={pollStartDate} />
+          </label>
+          <label htmlFor='inputEndDate'>End Date
+            <input id='inputEndDate' name='pollEndDate' type='date' onChange={e => { setPollEndDate(e.target.value) }} value={pollEndDate} />
+          </label>
+        </div>}
+      {pollStartDate && pollEndDate &&
         <div>
           <label htmlFor='selectStartTime'>Start Time
             <select id='selectStartTime' onChange={(e) => setPollStartTime(parseInt(e.target.value))} value={pollStartTime} >{listStartOptions}</select>
