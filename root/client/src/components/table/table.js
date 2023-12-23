@@ -8,10 +8,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
   const [week, setWeek] = useState({});
   const [startDay, setStartDay] = useState(null);
   const [endDay, setEndDay] = useState(null);
-  // const mounted = useRef(false);
-
-  // if the range is less than 7 days then the table is less than 7 days.
-  // if the range is greater than 7 days then we need to have a table of 7 days and an arrow to move forward and back.
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -30,13 +26,11 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
           5: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 5),
           6: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6),
         }
-        // we can show the arrows for previous and next.
         tableBtnsDiv.classList.remove('hide');
         setWeek(newStateWeek);
         setStartDay(startDateObject[Symbol.toPrimitive]('number'));
         setEndDay(new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6));
       } else {
-        // table length < 6,
         const newStateWeek = {};
         newStateWeek[0] = startDateObject[Symbol.toPrimitive]('number');
         let lastDay;
@@ -57,10 +51,8 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
 
   const handlePrevWeek = (e) => {
     e.preventDefault();
-    // const newStateWeek = {};
     const sevenDaysFromStart = week[0] - (7 * 24 * 60 * 60 * 1000);
     const startDateObject = new Date(`${startDate}T12:00:00.000Z`);
-    /* If going back seven days from this current startWeek is past the given startDate, then we just set the startOf the previous week to the startDate */
     if (sevenDaysFromStart < startDateObject[Symbol.toPrimitive]('number')) {
       const newStateWeek = {
         0: startDateObject[Symbol.toPrimitive]('number'),
@@ -71,12 +63,10 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
         5: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 5),
         6: new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6),
       }
-      // we can show the arrows for previous and next.
       setWeek(newStateWeek);
       setStartDay(startDateObject[Symbol.toPrimitive]('number'));
       setEndDay(new Date().setTime(startDateObject.getTime() + 1000 * 60 * 60 * 24 * 6));
     } else {
-      /* Else we set the start of the week to the day seven days back. */
       const newStartWeek = new Date(sevenDaysFromStart);
       const newStateWeek = {
         0: newStartWeek[Symbol.toPrimitive]('number'),
@@ -87,7 +77,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
         5: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 5),
         6: new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 6),
       }
-      // we can show the arrows for previous and next.
       setWeek(newStateWeek);
       setStartDay(newStartWeek[Symbol.toPrimitive]('number'));
       setEndDay(new Date().setTime(newStartWeek.getTime() + 1000 * 60 * 60 * 24 * 6));
@@ -96,15 +85,12 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
 
   const handleNextWeek = (e) => {
     e.preventDefault();
-
-    // if the current week is less than 7, then the endDate should be in the week object and therefore any further dates is out of the scope of the range.
     if (Object.keys(week).length < 7) {
       return;
     }
   
     const sevenDaysForward = week[6] + (7 * 24 * 60 * 60 * 1000);
     const endDateObject = new Date(`${endDate}T12:00:00.000Z`);
-    /* If going forward seven days from this current startWeek is past the given endDate, then we need to set the week to end of the previous week, and ends at endDate */
     if (sevenDaysForward > endDateObject[Symbol.toPrimitive]('number')) {
       const numDaysInNewWeek = Math.round((endDateObject - week[6]) / (24 * 60 * 60 * 1000));
       const newStateWeek = {};
@@ -120,7 +106,6 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
       setStartDay(firstDay);
       setEndDay(endDateObject[Symbol.toPrimitive]('number'));
     } else {
-      /* Else, we set the start week as the next day of the previous end week, and the table is seven days as normal */
       const nextDayOfWeek = new Date(week[6] + (24 * 60 * 60 * 1000));
       const newStateWeek = {
         0: nextDayOfWeek[Symbol.toPrimitive]('number'),
@@ -137,7 +122,7 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
     }
 
   }
-  
+
   const tbody = range(endTime - startTime, startTime).map((hour, idx) => {
     return (
       <tr key={idx}>

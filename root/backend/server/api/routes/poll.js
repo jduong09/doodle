@@ -46,7 +46,7 @@ router.route('/')
   })
 
 router.patch('/:pollId', async (req, res) => {
-  const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities } = req.body;
+  const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities, pollStartDate, pollEndDate, pollStartTime, pollEndTime } = req.body;
 
   try {
     const pollData = {
@@ -54,7 +54,11 @@ router.patch('/:pollId', async (req, res) => {
       description: pollDescription,
       location: pollLocation,
       duration: parseInt(pollDuration) * 60,
-      availabilities: pollAvailabilities
+      availabilities: pollAvailabilities,
+      startDate: pollStartDate,
+      endDate: pollEndDate,
+      startTime: pollStartTime,
+      endTime: pollEndTime
     }
 
     await Poll.findOneAndUpdate({ _id: req.params.pollId }, pollData);
