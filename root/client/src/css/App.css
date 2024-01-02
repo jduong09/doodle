@@ -28,15 +28,23 @@ h1, h2, h3 {
 }
 
 header > h2 {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
-#btn-poll-create {
+#btn-poll-create, #btn-admin-update, #btn-admin-create {
   background-color: #FFFFFF;
   border-color: #FFFFFF;
 }
 
-#btn-poll-create:hover {
+#btn-admin-update, #btn-admin-create {
+  width: 100%;
+}
+
+#btn-admin-update {
+  margin-bottom: .25rem;
+}
+
+#btn-poll-create:hover, #btn-admin-update:hover, #btn-admin-create:hover {
   background-color: #5CBDEA;
   border-color: #5CBDEA;
 }
@@ -126,6 +134,10 @@ form > label:last-of-type, #div-availabilities-table, table, thead, tr {
   width: 100%;
 }
 
+#div-admin-availabilities #ul-participants {
+  margin-bottom: 0;
+}
+
 th {
   width: calc(100% / 8);
 }
@@ -136,12 +148,27 @@ th {
   gap: 1rem;
 }
 
-#list-polls > li, #ul-availabilities > li {
-  padding: 1.5rem 1rem;
-  border: 2px solid #89CFF0;
-  text-align: center;
+.list-item-poll, .list-item-availability {
   display: flex;
   flex-direction: column;
+  padding: 1.5rem 1rem;
+  border: 1px solid transparent;
+  box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .15);
+  text-align: center;
+}
+
+.list-item-availability {
+  position: relative;
+}
+
+.list-item-availability::before {
+  width: calc(100% + 2px);
+  height: 16px;
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  background-color: #89CFF0;
 }
 
 #btn-form-submit {
@@ -153,7 +180,7 @@ th {
   display: none;
 }
 
-#list-polls > li > h3 {
+.list-item-poll > h3 {
   font-size: 1.25rem;
 }
 

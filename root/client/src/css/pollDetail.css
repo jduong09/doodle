@@ -1,19 +1,21 @@
+#form-response > div {
+  width: 100%;
+}
+
 #div-poll-description {
   padding: 1rem;
   border-bottom: 1px solid black;
-}
-
-#ul-poll-description {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 #ul-availabilities {
   margin: 1rem 0;
 }
 
-#ul-availabilities > li {
+#svg-most-selected {
+  position: absolute;
+  top: -10px;
+  left: -16px;
+  fill: #FEA3AA;
 }
 
 #ul-availabilities > li > h2 {
@@ -30,20 +32,16 @@
   margin: auto 0 0 0;
 }
 
-#div-form-response {
-  padding: 2rem;
-  border: 2px solid black;
-}
-
 #ul-participants {
+  width: 100%;
   margin: 1.5rem auto;
 }
 
 #ul-participants > li {
-  border: 2px solid skyblue;
-  border-radius: 500px;
+  border: 2px solid #89CFF0;
   padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
+  font-size: 1rem;
 }
 
 #ul-participants > li:last-child {
@@ -51,6 +49,29 @@
 }
 
 .btn-meeting-select.selected {
-  background-color: skyblue;
-  border-color: skyblue;
+  background-color: #89CFF0;
+  border-color: #89CFF0;
+}
+
+#form-response {
+  display: flex;
+  justify-content: space-between;
+}
+
+#form-response > label {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+#form-response #name {
+  width: 40%;
+  margin-left: 1rem;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+}
+
+#form-response #name:focus {
+  border-color: #89CFF0;
 }
