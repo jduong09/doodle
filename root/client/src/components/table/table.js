@@ -85,7 +85,7 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
 
   const handleNextWeek = (e) => {
     e.preventDefault();
-    if (Object.keys(week).length < 7) {
+    if (Object.keys(week).length < 7 || new Date(week[6]).toISOString().slice(0, 10) === endDate) {
       return;
     }
   
@@ -147,7 +147,7 @@ export const Table = ({ pollAvailabilities, setPollAvailabilities, duration, sta
   return (
     <div id="div-availabilities-table">
       <div id="table-header">
-        {week && <h2 id="week-current">{startDay && `${DAYABBRIEVATIONS[startDayObj.getDay()]}, ${convertIntToMonth(startDayObj.getMonth())} ${startDayObj.getDate()}, ${startDayObj.getFullYear()}`}{startDay && endDay && `- `}{endDay && `${DAYABBRIEVATIONS[endDayObj.getDay()]}, ${convertIntToMonth(endDayObj.getMonth())} ${endDayObj.getDate()}, ${endDayObj.getFullYear()}`}</h2>}
+        {week && <h2 id="week-current">{startDay && `${DAYABBRIEVATIONS[startDayObj.getDay()]}, ${convertIntToMonth(startDayObj.getMonth())} ${startDayObj.getDate()}, ${startDayObj.getFullYear()}`}{startDay && endDay && ` - `}{endDay && `${DAYABBRIEVATIONS[endDayObj.getDay()]}, ${convertIntToMonth(endDayObj.getMonth())} ${endDayObj.getDate()}, ${endDayObj.getFullYear()}`}</h2>}
         <div id="table-btns">
           <ul>
             <li>

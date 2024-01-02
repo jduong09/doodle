@@ -4,7 +4,6 @@ import { MonthlyTable } from '../monthlyTable/monthlyTable';
 import { range } from '../../util/tablehelpers';
 
 export const PollForm = ({ handleSubmit, editData }) => {
-  console.log(editData);
   const [pollName, setPollName] = useState(editData ? editData.name : '');
   const [pollDescription, setPollDescription] = useState(editData ? editData.description : '');
   const [pollLocation, setPollLocation] = useState(editData ? editData.location : '');
@@ -72,9 +71,15 @@ export const PollForm = ({ handleSubmit, editData }) => {
   });
 
   const listEndOptions = range(25 - endRangeStart, endRangeStart).map((hour, idx) => {
-    return (
-      <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
-    )
+    if (hour === 24) {
+      return (
+        <option key={idx} value={parseInt(hour)}>12:00 AM</option>
+      )
+    } else {
+      return (
+        <option key={idx} value={parseInt(hour)}>{hour < 12  ? `${hour === 0 ? 12 : hour}:00 A.M.` : `${hour - 12 === 0 ? 12 : hour - 12}:00 P.M.`}</option>
+      )
+    }
   });
 
   return (
