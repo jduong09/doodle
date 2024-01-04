@@ -188,3 +188,9 @@ export const findDayOfWeek = (day) => {
       return 'Error: Error finding Day Of Week.';
   }
 }
+
+export const dateDiff = (startDate, endDate) => Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+export const range = (size, startAt = 0) => {
+  return [...Array(size).keys()].map(i => i + startAt);
+}

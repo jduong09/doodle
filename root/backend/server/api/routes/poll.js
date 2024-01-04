@@ -21,7 +21,7 @@ router.route('/')
     }
   })
   .post(async (req, res) => {
-    const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities } = req.body;
+    const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities, pollStartDate, pollEndDate, pollStartTime, pollEndTime } = req.body;
   
     try {
       const pollData = {
@@ -30,7 +30,11 @@ router.route('/')
         location: pollLocation,
         duration: parseInt(pollDuration) * 60,
         availabilities: pollAvailabilities,
-        responses: {}
+        responses: {},
+        startDate: pollStartDate,
+        endDate: pollEndDate,
+        startTime: pollStartTime,
+        endTime: pollEndTime
       }
   
       const poll = new Poll(pollData);
@@ -42,7 +46,7 @@ router.route('/')
   })
 
 router.patch('/:pollId', async (req, res) => {
-  const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities } = req.body;
+  const { pollName, pollDescription, pollLocation, pollDuration, pollAvailabilities, pollStartDate, pollEndDate, pollStartTime, pollEndTime } = req.body;
 
   try {
     const pollData = {
@@ -50,7 +54,11 @@ router.patch('/:pollId', async (req, res) => {
       description: pollDescription,
       location: pollLocation,
       duration: parseInt(pollDuration) * 60,
-      availabilities: pollAvailabilities
+      availabilities: pollAvailabilities,
+      startDate: pollStartDate,
+      endDate: pollEndDate,
+      startTime: pollStartTime,
+      endTime: pollEndTime
     }
 
     await Poll.findOneAndUpdate({ _id: req.params.pollId }, pollData);
@@ -71,7 +79,11 @@ router.get('/:pollId/pollInfo', async (req, res) => {
           availabilities: data.availabilities,
           location: data.location,
           duration: parseInt(data.duration) / 60,
-          responses: data.responses
+          responses: data.responses,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          startTime: data.startTime,
+          endTime: data.endTime
         };
       });
     res.status(200).json({ pollData, response: 'Successfully retrieved poll data.' });
