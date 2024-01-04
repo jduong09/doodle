@@ -296,11 +296,11 @@ label > input + span {
   transition: width .5s ease, background-color .5s ease;
 }
 
+.hide {
+  display: none !important;
+}
+
 label > input:focus + span {
   width: 75%;
   background: #89CFF0;
-}
-
-.hide {
-  display: none !important;
 }
