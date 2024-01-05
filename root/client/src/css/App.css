@@ -144,7 +144,7 @@ th {
 
 #list-polls, #ul-availabilities {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
 }
 
@@ -330,4 +330,33 @@ label > input + span {
 label > input:focus + span {
   width: 75%;
   background: #89CFF0;
+}
+
+@media (min-width: 576px) {
+  #list-polls {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .list-item-poll {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 768px) {
+  #list-polls {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  #list-polls {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  #list-polls {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }

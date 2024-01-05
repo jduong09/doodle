@@ -74,8 +74,6 @@
 }
 
 #form-response #name {
-  width: 40%;
-  margin-left: 1rem;
   background-color: #FFFFFF;
   border: 1px solid #000000;
 }
@@ -86,4 +84,50 @@
 
 #form-response > label:last-of-type, #btn-submit {
   margin-bottom: 1rem;
+}
+
+#form-response > label {
+  width: 100%;
+}
+
+#form-response #name {
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+}
+
+#btn-submit {
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  #ul-availabilities {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #form-response #name {
+    width: 25%;
+  }
+
+  #btn-submit {
+    width: fit-content;
+  }
+}
+
+@media (min-width: 768px) {
+  #ul-availabilities {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  #ul-availabilities {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  #ul-availabilities {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
