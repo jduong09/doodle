@@ -1,3 +1,11 @@
+#ul-poll-description > li > svg {
+  margin-right: .5rem;
+}
+
+#ul-poll-description > li:first-of-type {
+  margin-bottom: 1rem;
+}
+
 #form-response > div {
   width: 100%;
 }
@@ -74,4 +82,8 @@
 
 #form-response #name:focus {
   border-color: #89CFF0;
+}
+
+#form-response > label:last-of-type, #btn-submit {
+  margin-bottom: 1rem;
 }

@@ -23,7 +23,7 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
-#svg-logo {
+#svg-logo, #svg-description, #svg-location {
   fill: #FFFFFF;
 }
 
