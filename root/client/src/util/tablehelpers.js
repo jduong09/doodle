@@ -90,7 +90,6 @@ export const getDayOfTheWeek = (dateObj) => {
 
 export const createPossibleTimeBlock = (date, startTime, duration) => {
   const span = document.createElement('span');
-
   const timezoneOffset = new Date(Date.now()).getTimezoneOffset();
   const timezoneOffsetToHour = timezoneOffset / 60;
   const dateObject = new Date(`${date}T${startTime}:00.000${timezoneOffset > 0 ? '-' : '+'}${timezoneOffsetToHour < 10 ? `0${timezoneOffsetToHour}` : timezoneOffsetToHour}:00`);
@@ -98,7 +97,6 @@ export const createPossibleTimeBlock = (date, startTime, duration) => {
   const minutes = startTime.split(':')[1];
   const timeframe = calculateTimeFrame(local24StartTime, duration);
   const position = classTopPosition(minutes);
-
   span.innerHTML = timeframe;
   span.classList.add('temp-timeblock', position, `h-${duration}`);
   return span;
@@ -189,4 +187,10 @@ export const findDayOfWeek = (day) => {
     default:
       return 'Error: Error finding Day Of Week.';
   }
+}
+
+export const dateDiff = (startDate, endDate) => Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+export const range = (size, startAt = 0) => {
+  return [...Array(size).keys()].map(i => i + startAt);
 }

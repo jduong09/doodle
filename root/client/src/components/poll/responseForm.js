@@ -13,9 +13,13 @@ export const ResponseForm = ({ pollUuid, availabilities, responses, duration }) 
     if (!newChoicesObj.includes(timestamp)) {
       newChoicesObj.push(timestamp)
       e.target.classList.add('selected');
+      e.target.innerText = 'Selected';
+      e.target.parentElement.classList.add('selected');
     } else {
       newChoicesObj = choices.filter((chosenTimestamps) => chosenTimestamps !== timestamp);
       e.target.classList.remove('selected');
+      e.target.innerText = 'Select Time';
+      e.target.parentElement.classList.remove('selected');
     }
     setChoices(newChoicesObj);
   }
